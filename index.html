@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Homework Study Hub Pro</title>
+  <title>Study Hub - Clean</title>
   <style>
     * {
       margin: 0;
@@ -12,222 +12,312 @@
     }
 
     :root {
-      --bg-primary: #ffffff;
-      --bg-secondary: #f8f9fa;
-      --text-primary: #333;
-      --text-secondary: #666;
-      --border: #e0e0e0;
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f5;
+      --text: #1a1a1a;
+      --text-light: #666;
       --accent: #667eea;
       --success: #28a745;
+      --border: #e0e0e0;
     }
 
     [data-theme="dark"] {
-      --bg-primary: #1a1a1a;
+      --bg: #1a1a1a;
       --bg-secondary: #2d2d2d;
-      --text-primary: #e0e0e0;
-      --text-secondary: #b0b0b0;
-      --border: #404040;
+      --text: #e0e0e0;
+      --text-light: #aaa;
       --accent: #7b88dd;
       --success: #32c754;
+      --border: #404040;
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg-secondary);
-      color: var(--text-primary);
-      padding: 16px;
-      transition: all 0.3s;
+      color: var(--text);
+      padding: 0;
+      margin: 0;
     }
 
     .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 24px;
-      border-radius: 12px;
-      margin-bottom: 24px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .header h1 {
-      font-size: 28px;
+      font-size: 20px;
+      font-weight: 600;
     }
 
-    .theme-toggle {
-      background: rgba(255,255,255,0.2);
+    .theme-btn {
+      background: var(--bg-secondary);
       border: none;
-      color: white;
-      padding: 8px 14px;
       border-radius: 6px;
+      padding: 8px 12px;
       cursor: pointer;
-      font-weight: 500;
-    }
-
-    .theme-toggle:hover {
-      background: rgba(255,255,255,0.3);
+      font-size: 14px;
+      color: var(--text);
     }
 
     .container {
-      max-width: 900px;
+      max-width: 500px;
       margin: 0 auto;
-      background: var(--bg-primary);
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      padding: 20px;
-    }
-
-    .nav {
-      display: flex;
-      gap: 4px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 20px;
-      overflow-x: auto;
-    }
-
-    .nav button {
-      padding: 12px 16px;
-      border: none;
-      background: transparent;
-      border-bottom: 2px solid transparent;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      white-space: nowrap;
-    }
-
-    .nav button.active {
-      border-bottom-color: var(--accent);
-      color: var(--text-primary);
-    }
-
-    .content {
-      display: none;
-    }
-
-    .content.active {
-      display: block;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .card {
-      background: var(--bg-secondary);
-      border: 0.5px solid var(--border);
-      border-radius: 12px;
       padding: 16px;
-      cursor: pointer;
-      transition: all 0.2s;
     }
 
-    .card:hover {
-      border-color: var(--accent);
-    }
-
-    .class-card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .grade-display {
-      background: var(--accent);
-      color: white;
-      padding: 12px;
-      border-radius: 8px;
+    .today-section {
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 24px 20px;
       text-align: center;
-      font-size: 24px;
-      font-weight: 500;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
     }
 
-    .btn {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-    }
-
-    .btn-success {
-      background: var(--success);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text-primary);
-      border: 0.5px solid var(--border);
-    }
-
-    .input-group {
-      margin-bottom: 12px;
-    }
-
-    label {
-      display: block;
+    .today-label {
       font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       font-weight: 500;
-      margin-bottom: 6px;
-      color: var(--text-secondary);
     }
 
-    input, textarea, select {
-      width: 100%;
-      padding: 8px 12px;
-      border: 0.5px solid var(--border);
-      border-radius: 8px;
+    .focus-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .focus-subtitle {
       font-size: 13px;
-      font-family: inherit;
-      background: var(--bg-primary);
-      color: var(--text-primary);
+      color: var(--text-light);
+      margin-bottom: 20px;
     }
 
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .timer-display {
-      font-size: 48px;
-      font-weight: 500;
-      text-align: center;
-      font-family: monospace;
+    .streak-display {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
       margin: 20px 0;
+      padding: 12px 0;
+    }
+
+    .streak-item {
+      text-align: center;
+    }
+
+    .streak-number {
+      font-size: 28px;
+      font-weight: 700;
       color: var(--accent);
     }
 
-    .timer-label {
-      text-align: center;
-      font-size: 14px;
-      color: var(--text-secondary);
+    .streak-label {
+      font-size: 11px;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent) 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s;
+      margin-top: 12px;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+    }
+
+    .progress-card {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 16px;
       margin-bottom: 12px;
     }
 
-    .flashcard {
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .progress-title {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .progress-grade {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-secondary);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .collapsible-section {
+      margin-top: 24px;
+    }
+
+    .collapsible-header {
+      background: var(--bg);
+      border: none;
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .collapsible-header:hover {
+      background: var(--bg-secondary);
+    }
+
+    .collapsible-icon {
+      transition: transform 0.3s;
+      font-size: 18px;
+    }
+
+    .collapsible-header.open .collapsible-icon {
+      transform: rotate(180deg);
+    }
+
+    .collapsible-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .collapsible-content.open {
+      max-height: 1000px;
+    }
+
+    .collapsible-body {
+      background: var(--bg);
+      border-radius: 0 0 12px 12px;
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .tool-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .tool-btn:hover {
       background: var(--accent);
       color: white;
-      padding: 40px 20px;
-      border-radius: 12px;
+      border-color: var(--accent);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg);
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px 20px 0 0;
+      padding: 24px 20px;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .modal-close {
+      float: right;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      clear: both;
+    }
+
+    .flashcard {
+      background: linear-gradient(135deg, var(--accent) 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 24px;
+      border-radius: 16px;
       text-align: center;
       cursor: pointer;
       margin-bottom: 16px;
@@ -235,323 +325,445 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      transition: transform 0.2s;
     }
 
-    .notes-box {
-      background: var(--bg-secondary);
-      border: 0.5px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 16px;
+    .flashcard:hover {
+      transform: scale(1.02);
     }
 
-    .notes-label {
-      font-size: 12px;
+    .flashcard-content {
+      font-size: 18px;
       font-weight: 500;
-      margin-bottom: 8px;
-      color: var(--text-secondary);
-    }
-
-    .assignment-item {
-      background: var(--bg-secondary);
-      border: 0.5px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .assignment-info {
-      flex: 1;
-    }
-
-    .assignment-title {
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-
-    .assignment-meta {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    .due-badge {
-      background: #dc3545;
-      color: white;
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .guide-item {
-      background: var(--bg-secondary);
-      border: 0.5px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 12px;
-    }
-
-    .guide-title {
-      font-weight: 500;
-      margin-bottom: 8px;
-    }
-
-    .guide-content {
-      font-size: 12px;
-      color: var(--text-secondary);
       line-height: 1.6;
     }
 
-    .score-badge {
-      background: var(--success);
-      color: white;
-      padding: 6px 12px;
-      border-radius: 4px;
-      font-size: 12px;
+    .flashcard-hint {
+      font-size: 11px;
+      opacity: 0.8;
+      margin-top: 16px;
+    }
+
+    .quiz-question {
+      background: var(--bg-secondary);
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .quiz-question-text {
       font-weight: 500;
+      margin-bottom: 8px;
     }
 
-    .full-width {
+    .quiz-input {
       width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      background: var(--bg);
+      color: var(--text);
     }
 
-    .flex {
-      display: flex;
-      gap: 8px;
+    .btn-secondary {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      margin-top: 8px;
+      width: 100%;
+      transition: all 0.2s;
     }
 
-    .flex button {
-      flex: 1;
+    .btn-secondary:hover {
+      background: var(--border);
     }
 
-    .hidden {
-      display: none;
+    .score-display {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent);
+      text-align: center;
+      margin: 24px 0;
+    }
+
+    .hidden { display: none; }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-light);
+    }
+
+    .empty-state-emoji {
+      font-size: 48px;
+      margin-bottom: 12px;
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <div>
-      <h1>📚 Study Hub Pro</h1>
-    </div>
-    <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+    <h1>📚 Study</h1>
+    <button class="theme-btn" onclick="toggleTheme()">🌙</button>
   </div>
 
   <div class="container">
-    <div class="nav">
-      <button class="nav-btn active" onclick="switchTab('grades', this)">Classes</button>
-      <button class="nav-btn" onclick="switchTab('due-dates', this)">Due Dates</button>
-      <button class="nav-btn" onclick="switchTab('flashcards', this)">Study</button>
-      <button class="nav-btn" onclick="switchTab('timer', this)">Timer</button>
-      <button class="nav-btn" onclick="switchTab('guides', this)">Guides</button>
-      <button class="nav-btn" onclick="switchTab('history', this)">History</button>
-      <button class="nav-btn" onclick="switchTab('generate', this)">Generate</button>
-      <button class="nav-btn" onclick="switchTab('calculator', this)">Calc</button>
-    </div>
+    <!-- TODAY'S FOCUS -->
+    <div class="today-section">
+      <div class="today-label">Today's Focus</div>
+      <div class="focus-title" id="focusTitle">Quadratic Equations</div>
+      <div class="focus-subtitle" id="focusSubtitle">Math • 35% accuracy</div>
 
-    <!-- Classes Tab -->
-    <div id="grades" class="content active">
-      <div class="grid" id="gradeGrid"></div>
-    </div>
-
-    <!-- Due Dates Tab -->
-    <div id="due-dates" class="content">
-      <div id="dueList"></div>
-    </div>
-
-    <!-- Study/Flashcards Tab -->
-    <div id="flashcards" class="content">
-      <div style="margin-bottom: 16px;">
-        <label>Select class</label>
-        <div style="display: flex; gap: 6px; flex-wrap: wrap;" id="classButtons"></div>
+      <div class="streak-display">
+        <div class="streak-item">
+          <div class="streak-number" id="streakNum">7</div>
+          <div class="streak-label">Day Streak</div>
+        </div>
+        <div class="streak-item">
+          <div class="streak-number" id="scoreNum">72%</div>
+          <div class="streak-label">Average</div>
+        </div>
       </div>
 
-      <div id="cardsView">
-        <div class="notes-box">
-          <div class="notes-label">📝 Study Notes</div>
-          <textarea id="studyNotes" placeholder="Write what you're learning..."></textarea>
+      <button class="primary-btn" onclick="openStudyModal()">Start Studying</button>
+    </div>
+
+    <!-- YOUR CLASSES -->
+    <div class="collapsible-section">
+      <button class="collapsible-header" onclick="toggleCollapsible(event)">
+        📊 Your Classes
+        <span class="collapsible-icon">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="collapsible-body">
+          <div class="progress-card">
+            <div class="progress-header">
+              <div class="progress-title">Math</div>
+              <div class="progress-grade">A-</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 90%;"></div>
+            </div>
+          </div>
+          <div class="progress-card">
+            <div class="progress-header">
+              <div class="progress-title">English</div>
+              <div class="progress-grade">B+</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 85%;"></div>
+            </div>
+          </div>
+          <div class="progress-card">
+            <div class="progress-header">
+              <div class="progress-title">Science</div>
+              <div class="progress-grade">A</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 95%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div class="collapsible-section">
+      <button class="collapsible-header" onclick="toggleCollapsible(event)">
+        🛠️ Tools
+        <span class="collapsible-icon">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="collapsible-body">
+          <div class="tool-grid">
+            <button class="tool-btn" onclick="openMathHelp()">📐 Math Help</button>
+            <button class="tool-btn" onclick="openDebugger()">🐛 Debugging</button>
+            <button class="tool-btn" onclick="openNotes()">📝 Cornell Notes</button>
+            <button class="tool-btn" onclick="openConceptMap()">🗺️ Concept Map</button>
+            <button class="tool-btn" onclick="openTimer()">⏱️ Timer</button>
+            <button class="tool-btn" onclick="openGrammar()">✍️ Grammar</button>
+            <button class="tool-btn" onclick="openGenerate()">✨ Generate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROWTH -->
+    <div class="collapsible-section">
+      <button class="collapsible-header" onclick="toggleCollapsible(event)">
+        📈 Your Progress
+        <span class="collapsible-icon">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="collapsible-body">
+          <div class="progress-card">
+            <div class="progress-header">
+              <div class="progress-title">This Week</div>
+              <div class="progress-grade">+12%</div>
+            </div>
+            <p style="font-size: 12px; color: var(--text-light); margin-top: 8px;">You're improving! Keep the streak going.</p>
+          </div>
+          <div class="progress-card" style="margin-top: 8px;">
+            <div class="progress-header">
+              <div class="progress-title">Weakest Area</div>
+              <div class="progress-grade">Quadratics</div>
+            </div>
+            <p style="font-size: 12px; color: var(--text-light); margin-top: 8px;">Focus here to boost your grade.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM PADDING -->
+    <div style="height: 40px;"></div>
+  </div>
+
+  <!-- STUDY MODAL -->
+  <div class="modal" id="studyModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('studyModal')">✕</button>
+      <div class="modal-title">Quadratic Equations</div>
+
+      <div id="studyView">
+        <div class="flashcard" onclick="flipCard()">
+          <div id="cardContent" style="font-size: 18px;">Solve: x² + 5x + 6 = 0</div>
+          <div class="flashcard-hint">Click to reveal answer</div>
         </div>
 
-        <div class="flashcard" id="cardDisplay" onclick="flipCard()">
-          <div style="font-size: 11px; opacity: 0.9; margin-bottom: 12px;">Click to flip</div>
-          <div id="cardContent" style="font-size: 16px; font-weight: 500;"></div>
-        </div>
-
-        <div class="flex" style="margin-bottom: 12px;">
-          <button onclick="prevCard()" class="btn btn-secondary">← Prev</button>
-          <div style="flex: 1; text-align: center; font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; justify-content: center;">
+        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+          <button class="btn-secondary" onclick="prevCard()">← Prev</button>
+          <div style="flex: 1; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-light);">
             <span id="cardNum">1</span> / <span id="cardTotal">3</span>
           </div>
-          <button onclick="nextCard()" class="btn btn-secondary">Next →</button>
+          <button class="btn-secondary" onclick="nextCard()">Next →</button>
         </div>
 
-        <button id="quizBtn" onclick="startQuiz()" class="btn btn-success full-width">Start Quiz</button>
+        <button class="primary-btn" onclick="startQuiz()">Take Quiz</button>
+      </div>
 
-        <div id="quizView" class="hidden" style="margin-top: 16px;">
-          <div id="quizQuestions"></div>
-          <button onclick="submitQuiz()" class="btn btn-primary full-width" style="margin-bottom: 8px;">Submit</button>
-          <button onclick="cancelQuiz()" class="btn btn-secondary full-width">Cancel</button>
+      <div id="quizView" class="hidden">
+        <div id="quizQuestions"></div>
+        <button class="primary-btn" onclick="submitQuiz()">Submit</button>
+        <button class="btn-secondary" onclick="backToCards()">Back</button>
+      </div>
+
+      <div id="resultsView" class="hidden">
+        <div class="score-display" id="finalScore">75%</div>
+        <p style="text-align: center; color: var(--text-light); margin-bottom: 16px;">Great effort! Come back tomorrow to reinforce.</p>
+        <button class="primary-btn" onclick="closeModal('studyModal')">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATH HELP MODAL -->
+  <div class="modal" id="mathModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('mathModal')">✕</button>
+      <div class="modal-title">📐 Math Help</div>
+      
+      <div>
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-size: 12px; color: var(--text-light); margin-bottom: 6px;">Your Problem</label>
+          <input type="text" id="mathInput" placeholder="e.g., Solve 2x + 5 = 13" style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 14px; background: var(--bg); color: var(--text);">
         </div>
 
-        <div id="quizResults" class="hidden" style="margin-top: 16px;">
-          <div style="background: var(--bg-secondary); padding: 24px; border-radius: 12px; text-align: center; margin-bottom: 16px;">
-            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">Score</div>
-            <div style="font-size: 36px; font-weight: 500;" id="scoreValue">100%</div>
-          </div>
-          <div id="resultsList"></div>
-          <button onclick="backFromQuiz()" class="btn btn-primary full-width">Back</button>
+        <button class="primary-btn" onclick="solveMath()">Show Solution</button>
+      </div>
+
+      <div id="mathSolution" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+
+  <!-- DEBUGGER MODAL -->
+  <div class="modal" id="debugModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('debugModal')">✕</button>
+      <div class="modal-title">🐛 Debugging Help</div>
+
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-light); margin-bottom: 6px;">Paste your error</label>
+        <textarea id="errorInput" placeholder="e.g., TypeError: Cannot read property 'length'" style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 13px; min-height: 80px; background: var(--bg); color: var(--text);"></textarea>
+
+        <button class="primary-btn" onclick="decodeError()">Decode Error</button>
+      </div>
+
+      <div id="errorSolution" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+
+  <!-- CORNELL NOTES MODAL -->
+  <div class="modal" id="notesModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('notesModal')">✕</button>
+      <div class="modal-title">📝 Cornell Notes</div>
+
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px; margin-bottom: 12px;">
+        <div>
+          <label style="display: block; font-size: 11px; color: var(--text-light); margin-bottom: 6px; font-weight: 500;">Cues (Left)</label>
+          <textarea id="cueColumn" placeholder="Questions you'd ask yourself?" style="padding: 10px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 12px; min-height: 120px; background: var(--bg); color: var(--text);"></textarea>
+        </div>
+        <div>
+          <label style="display: block; font-size: 11px; color: var(--text-light); margin-bottom: 6px; font-weight: 500;">Notes (Right)</label>
+          <textarea id="notesColumn" placeholder="Detailed notes from lecture..." style="padding: 10px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 12px; min-height: 120px; background: var(--bg); color: var(--text);"></textarea>
+        </div>
+      </div>
+
+      <label style="display: block; font-size: 11px; color: var(--text-light); margin-bottom: 6px; font-weight: 500;">Summary (Bottom)</label>
+      <textarea id="summaryColumn" placeholder="2-3 sentence summary" style="padding: 10px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 12px; min-height: 60px; background: var(--bg); color: var(--text); margin-bottom: 12px;"></textarea>
+
+      <button class="primary-btn" onclick="saveCornellNotes()">Save Notes</button>
+    </div>
+  </div>
+
+  <!-- CONCEPT MAP MODAL -->
+  <div class="modal" id="conceptModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('conceptModal')">✕</button>
+      <div class="modal-title">🗺️ Concept Map</div>
+
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-light); margin-bottom: 6px;">Central Topic</label>
+        <input type="text" id="centralTopic" placeholder="e.g., Photosynthesis" style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 14px; background: var(--bg); color: var(--text); margin-bottom: 12px;">
+
+        <label style="display: block; font-size: 12px; color: var(--text-light); margin-bottom: 6px;">Related Concepts (comma separated)</label>
+        <input type="text" id="relatedConcepts" placeholder="e.g., glucose, ATP, chlorophyll" style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 14px; background: var(--bg); color: var(--text); margin-bottom: 12px;">
+
+        <button class="primary-btn" onclick="generateConceptMap()">Create Map</button>
+      </div>
+
+      <div id="conceptMapDisplay" style="margin-top: 16px;"></div>
+    </div>
+  </div>
+
+  <!-- TIMER MODAL -->
+  <div class="modal" id="timerModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('timerModal')">✕</button>
+      <div class="modal-title">⏱️ Pomodoro Timer</div>
+
+      <div style="text-align: center; padding: 24px 0;">
+        <div style="font-size: 48px; font-weight: 700; color: var(--accent); font-family: monospace; letter-spacing: 4px;" id="timerDisplay">25:00</div>
+        <p style="color: var(--text-light); font-size: 12px; margin-top: 8px;">25 min focus • 5 min break</p>
+      </div>
+
+      <div style="display: flex; gap: 8px;">
+        <button id="timerBtn" class="primary-btn" onclick="toggleTimer()" style="flex: 1;">Start</button>
+        <button class="btn-secondary" onclick="resetTimer()" style="flex: 1;">Reset</button>
+      </div>
+
+      <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-top: 16px; font-size: 12px; line-height: 1.6; color: var(--text-light);">
+        <strong>How it works:</strong><br>
+        1. Start 25-min focus session<br>
+        2. Study without distractions<br>
+        3. When timer ends, take 5 min break<br>
+        4. Repeat
+      </div>
+    </div>
+  </div>
+
+  <!-- GRAMMAR MODAL -->
+  <div class="modal" id="grammarModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('grammarModal')">✕</button>
+      <div class="modal-title">✍️ Grammar Check</div>
+
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-light); margin-bottom: 6px;">Paste your sentence</label>
+        <textarea id="grammarInput" placeholder="e.g., I went to the store, I bought milk." style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 13px; min-height: 80px; background: var(--bg); color: var(--text); margin-bottom: 12px;"></textarea>
+
+        <button class="primary-btn" onclick="checkGrammar()">Check Sentence</button>
+      </div>
+
+      <div id="grammarResult" style="margin-top: 16px;"></div>
+
+      <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+        <div style="font-size: 12px; font-weight: 600; margin-bottom: 12px;">Top Grammar Rules</div>
+        
+        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
+          <strong>1. Comma Splice:</strong> Two sentences with just a comma<br>
+          ❌ "I went to the store, I bought milk."<br>
+          ✓ "I went to the store, and I bought milk."
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
+          <strong>2. Apostrophe for Possession:</strong> Use for ownership, not plurals<br>
+          ❌ "the dog's run fast" (plural)<br>
+          ✓ "the dog's collar" (possession), "the dogs run fast" (plural)
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
+          <strong>3. its vs it's:</strong> Easy mix-up<br>
+          ✓ "it's raining" = it is raining<br>
+          ✓ "the dog lost its collar" = possession
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
+          <strong>4. Your vs You're:</strong><br>
+          ✓ "you're going" = you are going<br>
+          ✓ "your book" = possession
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
+          <strong>5. Capital I:</strong> Always capitalize when talking about yourself<br>
+          ❌ "i went to school"<br>
+          ✓ "I went to school"
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
+          <strong>6. Run-on Sentence:</strong> Too many ideas, too many "and"s<br>
+          ❌ "I studied hard and I took the test and I got an A."<br>
+          ✓ "I studied hard. Then I took the test and got an A."
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
+          <strong>7. Fragment:</strong> Missing subject or verb<br>
+          ❌ "Because I studied hard." (missing main idea)<br>
+          ✓ "I did well because I studied hard."
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; font-size: 11px; line-height: 1.6;">
+          <strong>8. End Punctuation:</strong> Every sentence needs it<br>
+          ❌ "I studied all day"<br>
+          ✓ "I studied all day."
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Timer Tab -->
-    <div id="timer" class="content">
-      <div style="background: var(--bg-secondary); padding: 20px; border-radius: 12px; text-align: center;">
-        <div class="timer-label">Focus Time</div>
-        <div class="timer-display" id="timerDisplay">25:00</div>
-        <div class="flex">
-          <button id="timerBtn" onclick="toggleTimer()" class="btn btn-primary">Start</button>
-          <button onclick="resetTimer()" class="btn btn-secondary">Reset</button>
-        </div>
-        <div style="margin-top: 16px; font-size: 12px; color: var(--text-secondary);">
-          Sessions completed: <span id="sessionCount">0</span>
-        </div>
-      </div>
-    </div>
+  <!-- GENERATE MODAL -->
+  <div class="modal" id="generateModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('generateModal')">✕</button>
+      <div class="modal-title">✨ Generate Flashcards</div>
 
-    <!-- Guides Tab -->
-    <div id="guides" class="content">
-      <div style="margin-bottom: 16px;">
-        <label>Select subject</label>
-        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
-          <button class="btn btn-secondary" onclick="showGuide('math')">Math</button>
-          <button class="btn btn-secondary" onclick="showGuide('biology')">Biology</button>
-          <button class="btn btn-secondary" onclick="showGuide('chemistry')">Chemistry</button>
-          <button class="btn btn-secondary" onclick="showGuide('english')">English</button>
-          <button class="btn btn-secondary" onclick="showGuide('history')">History</button>
-        </div>
-      </div>
-      <div id="guidesList"></div>
-    </div>
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-light); margin-bottom: 6px;">Class Name</label>
+        <input type="text" id="genClassName" placeholder="e.g., Biology" style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 14px; background: var(--bg); color: var(--text); margin-bottom: 12px;">
 
-    <!-- History Tab -->
-    <div id="history" class="content">
-      <div id="historyList"></div>
-      <button onclick="clearHistory()" class="btn btn-secondary" style="margin-top: 16px;">Clear History</button>
-    </div>
+        <label style="display: block; font-size: 12px; color: var(--text-light); margin-bottom: 6px;">Paste assignment text or notes</label>
+        <textarea id="genText" placeholder="Paste text here..." style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 13px; min-height: 120px; background: var(--bg); color: var(--text); margin-bottom: 12px;"></textarea>
 
-    <!-- Generate Tab -->
-    <div id="generate" class="content">
-      <div class="input-group">
-        <label>Class name</label>
-        <input type="text" id="genClassName" placeholder="e.g., Physics">
-      </div>
-
-      <div class="input-group">
-        <label>Due date</label>
-        <input type="date" id="genDueDate">
-      </div>
-
-      <div class="input-group">
-        <label>Paste text</label>
-        <textarea id="genText" placeholder="Copy and paste assignment text..."></textarea>
-      </div>
-
-      <button onclick="generateCards()" class="btn btn-primary full-width">Generate Flashcards</button>
-    </div>
-
-    <!-- Calculator Tab -->
-    <div id="calculator" class="content">
-      <div style="background: var(--bg-secondary); padding: 16px; border-radius: 12px;">
-        <div style="background: var(--bg-primary); padding: 14px; border-radius: 8px; text-align: right; font-size: 20px; font-weight: 500; margin-bottom: 12px; min-height: 36px;" id="calcDisplay">0</div>
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;">
-          <button onclick="calcClear()" class="btn btn-secondary">C</button>
-          <button onclick="calcBackspace()" class="btn btn-secondary">⌫</button>
-          <button onclick="calcOp('/')" class="btn btn-primary">÷</button>
-          <button onclick="calcOp('*')" class="btn btn-primary">×</button>
-
-          <button onclick="calcNum(7)" class="btn btn-secondary">7</button>
-          <button onclick="calcNum(8)" class="btn btn-secondary">8</button>
-          <button onclick="calcNum(9)" class="btn btn-secondary">9</button>
-          <button onclick="calcOp('-')" class="btn btn-primary">−</button>
-
-          <button onclick="calcNum(4)" class="btn btn-secondary">4</button>
-          <button onclick="calcNum(5)" class="btn btn-secondary">5</button>
-          <button onclick="calcNum(6)" class="btn btn-secondary">6</button>
-          <button onclick="calcOp('+')" class="btn btn-primary">+</button>
-
-          <button onclick="calcNum(1)" class="btn btn-secondary">1</button>
-          <button onclick="calcNum(2)" class="btn btn-secondary">2</button>
-          <button onclick="calcNum(3)" class="btn btn-secondary">3</button>
-          <button onclick="calcEquals()" class="btn btn-success" style="grid-row: span 2;">=</button>
-
-          <button onclick="calcNum(0)" class="btn btn-secondary" style="grid-column: span 2;">0</button>
-          <button onclick="calcNum('.')" class="btn btn-secondary">.</button>
-        </div>
+        <button class="primary-btn" onclick="generateCards()">Generate Cards</button>
       </div>
     </div>
   </div>
 
   <script>
-    let classes = {
-      math: { name: 'Math', grade: 'A-', dueDate: '2026-09-10', cards: [
-        { id: 1, q: 'Solve: 2x + 8 = 16', a: 'x = 4' },
-        { id: 2, q: 'Pythagorean theorem?', a: 'a² + b² = c²' },
-      ]},
-      english: { name: 'English', grade: 'B+', dueDate: '2026-09-08', cards: [
-        { id: 4, q: 'Thesis statement?', a: 'Main argument of the essay' },
-      ]},
-      science: { name: 'Science', grade: 'A', dueDate: '2026-09-12', cards: [
-        { id: 6, q: 'Photosynthesis?', a: 'Process plants convert sunlight to energy' },
-      ]},
-    };
+    let cards = [
+      { q: 'Solve: x² + 5x + 6 = 0', a: 'x = -2 or x = -3' },
+      { q: 'What is the quadratic formula?', a: 'x = (-b ± √(b²-4ac)) / 2a' },
+      { q: 'Factor: x² + 7x + 12', a: '(x + 3)(x + 4)' }
+    ];
 
-    const guides = {
-      math: [
-        { title: 'Solving Linear Equations', content: '1. Isolate variable on one side 2. Simplify each side 3. Divide by coefficient' },
-        { title: 'Pythagorean Theorem', content: 'a² + b² = c². Used for right triangles. Find any missing side.' },
-      ],
-      biology: [
-        { title: 'Cell Structure', content: 'Nucleus (DNA), Mitochondria (energy), Ribosomes (protein), Chloroplasts (photosynthesis in plants)' },
-        { title: 'Photosynthesis', content: '6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂. Happens in chloroplasts.' },
-      ],
-      chemistry: [
-        { title: 'Chemical Bonds', content: 'Ionic: transfer electrons. Covalent: share electrons. Metallic: sea of electrons.' },
-        { title: 'Balancing Equations', content: 'Count atoms on each side. Adjust coefficients until equal.' },
-      ],
-      english: [
-        { title: 'Essay Structure', content: 'Intro (hook + thesis) → Body (topic sentence + evidence + analysis) → Conclusion (restate thesis)' },
-        { title: 'Literary Devices', content: 'Metaphor, simile, imagery, symbolism, irony. Identify and analyze their effect.' },
-      ],
-      history: [
-        { title: 'Analyze Sources', content: 'Who wrote it? When? Why? What perspective? How reliable?' },
-        { title: 'Timeline Events', content: 'Identify causes and effects. Look for patterns and connections.' },
-      ],
-    };
-
-    let selectedClass = 'math';
     let cardIndex = 0;
     let isFlipped = false;
-    let quizMode = false;
     let quizAnswers = {};
-    let timerSeconds = 25 * 60;
-    let timerRunning = false;
-    let sessionsCompleted = 0;
-    let quizHistory = [];
 
-    // Timer interval
-    let timerInterval = null;
-
-    // Calculator
-    let calcDisplay = '0';
-    let calcPrev = '';
-    let currentOp = null;
-    let calcNewNum = true;
-
-    // Theme
     function toggleTheme() {
       const current = document.documentElement.getAttribute('data-theme');
       const newTheme = current === 'dark' ? 'light' : 'dark';
@@ -559,91 +771,23 @@
       localStorage.setItem('theme', newTheme);
     }
 
-    function initTheme() {
-      const saved = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', saved);
+    function toggleCollapsible(e) {
+      const header = e.currentTarget;
+      const content = header.nextElementSibling;
+      header.classList.toggle('open');
+      content.classList.toggle('open');
     }
 
-    // Tab switching
-    function switchTab(tab, btn) {
-      document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-      document.getElementById(tab).classList.add('active');
-      if (btn) btn.classList.add('active');
-      
-      if (tab === 'grades') renderGrades();
-      if (tab === 'due-dates') renderDueDates();
-      if (tab === 'flashcards') renderFlashcards();
-      if (tab === 'history') renderHistory();
-    }
-
-    function renderGrades() {
-      const grid = document.getElementById('gradeGrid');
-      grid.innerHTML = Object.entries(classes).map(([key, cls]) => `
-        <div class="card class-card">
-          <div>
-            <div style="font-size: 14px; font-weight: 500; margin-bottom: 12px;">${cls.name}</div>
-            <div class="grade-display">${cls.grade}</div>
-          </div>
-          <button onclick="selectClass('${key}'); switchTabFromButton('flashcards');" class="btn btn-primary full-width">Study</button>
-        </div>
-      `).join('');
-    }
-
-    function renderDueDates() {
-      const list = document.getElementById('dueList');
-      const sorted = Object.entries(classes).sort((a, b) => new Date(a[1].dueDate) - new Date(b[1].dueDate));
-      list.innerHTML = sorted.map(([key, cls]) => {
-        const days = Math.ceil((new Date(cls.dueDate) - new Date()) / (1000 * 60 * 60 * 24));
-        return `
-          <div class="assignment-item">
-            <div class="assignment-info">
-              <div class="assignment-title">${cls.name}</div>
-              <div class="assignment-meta">${cls.dueDate} • ${days} days left</div>
-            </div>
-            ${days <= 2 ? '<div class="due-badge">URGENT</div>' : ''}
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderFlashcards() {
-      const buttons = document.getElementById('classButtons');
-      buttons.innerHTML = Object.entries(classes).map(([key, cls]) => `
-        <button class="btn ${selectedClass === key ? 'btn-primary' : 'btn-secondary'}" onclick="selectClass('${key}', this)">${cls.name}</button>
-      `).join('');
+    function openStudyModal() {
+      document.getElementById('studyModal').classList.add('open');
       renderCard();
     }
 
-    function selectClass(key, btn) {
-      selectedClass = key;
-      cardIndex = 0;
-      isFlipped = false;
-      quizMode = false;
-      document.querySelectorAll('#classButtons .btn').forEach(b => {
-        b.classList.remove('btn-primary');
-        b.classList.add('btn-secondary');
-      });
-      if (btn) {
-        btn.classList.remove('btn-secondary');
-        btn.classList.add('btn-primary');
-      }
-      renderFlashcards();
-    }
-
-    function switchTabFromButton(tab) {
-      const buttons = document.querySelectorAll('.nav-btn');
-      let targetBtn = null;
-      buttons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.textContent === 'Study' && tab === 'flashcards') targetBtn = btn;
-        if (btn.textContent === 'Classes' && tab === 'grades') targetBtn = btn;
-      });
-      switchTab(tab, targetBtn);
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
     }
 
     function renderCard() {
-      const cards = classes[selectedClass].cards;
       const card = cards[cardIndex];
       document.getElementById('cardContent').textContent = isFlipped ? card.a : card.q;
       document.getElementById('cardNum').textContent = cardIndex + 1;
@@ -656,7 +800,6 @@
     }
 
     function nextCard() {
-      const cards = classes[selectedClass].cards;
       if (cardIndex < cards.length - 1) {
         cardIndex++;
         isFlipped = false;
@@ -673,99 +816,91 @@
     }
 
     function startQuiz() {
-      quizMode = true;
+      document.getElementById('studyView').classList.add('hidden');
       quizAnswers = {};
-      document.getElementById('quizBtn').classList.add('hidden');
-      document.getElementById('cardDisplay').classList.add('hidden');
       
-      const cards = classes[selectedClass].cards;
-      const html = cards.map(c => `
-        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-bottom: 8px;">
-          <div style="font-size: 12px; font-weight: 500; margin-bottom: 6px;">Q${cards.indexOf(c) + 1}: ${c.q}</div>
-          <input type="text" placeholder="Your answer..." value="${quizAnswers[c.id] || ''}" 
-                 onchange="quizAnswers[${c.id}] = this.value" style="width: 100%; padding: 6px 10px; border: 0.5px solid var(--border); border-radius: 6px; font-size: 12px;">
+      const html = cards.map((c, i) => `
+        <div class="quiz-question">
+          <div class="quiz-question-text">Q${i + 1}: ${c.q}</div>
+          <input type="text" class="quiz-input" placeholder="Your answer..." data-id="${i}" onchange="quizAnswers[${i}] = this.value">
         </div>
       `).join('');
-      
+
       document.getElementById('quizQuestions').innerHTML = html;
       document.getElementById('quizView').classList.remove('hidden');
     }
 
     function submitQuiz() {
-      const cards = classes[selectedClass].cards;
       let score = 0;
-      
-      cards.forEach(c => {
-        const ans = (quizAnswers[c.id] || '').toLowerCase().trim();
-        const correct = c.a.toLowerCase().trim();
-        const keywords = correct.split(' ');
+      cards.forEach((c, i) => {
+        const ans = (quizAnswers[i] || '').toLowerCase();
+        const keywords = c.a.toLowerCase().split(' ');
         if (keywords.some(kw => ans.includes(kw))) score++;
       });
-      
+
       const percent = Math.round((score / cards.length) * 100);
-      document.getElementById('scoreValue').textContent = percent + '%';
+      document.getElementById('finalScore').textContent = percent + '%';
       
-      quizHistory.push({ class: classes[selectedClass].name, score: percent, date: new Date().toLocaleDateString() });
-      localStorage.setItem('quizHistory', JSON.stringify(quizHistory));
-      
-      const results = cards.map(c => {
-        const ans = (quizAnswers[c.id] || '').toLowerCase().trim();
-        const correct = c.a.toLowerCase().trim();
-        const keywords = correct.split(' ');
-        const isCorrect = keywords.some(kw => ans.includes(kw));
-        return `
-          <div style="background: ${isCorrect ? 'rgba(40, 167, 69, 0.1)' : 'rgba(220, 53, 69, 0.1)'}; padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 0.5px solid var(--border);">
-            <div style="font-weight: 500; margin-bottom: 4px;">${isCorrect ? '✓' : '✗'} ${c.q}</div>
-            <div style="font-size: 12px;">You: ${ans || '(blank)'}</div>
-            <div style="font-size: 12px;">Answer: ${c.a}</div>
-          </div>
-        `;
-      }).join('');
-      
-      document.getElementById('resultsList').innerHTML = results;
       document.getElementById('quizView').classList.add('hidden');
-      document.getElementById('quizResults').classList.remove('hidden');
+      document.getElementById('resultsView').classList.remove('hidden');
     }
 
-    function cancelQuiz() {
-      quizMode = false;
-      document.getElementById('quizBtn').classList.remove('hidden');
-      document.getElementById('cardDisplay').classList.remove('hidden');
+    function backToCards() {
       document.getElementById('quizView').classList.add('hidden');
-      document.getElementById('quizResults').classList.add('hidden');
+      document.getElementById('studyView').classList.remove('hidden');
     }
 
-    function backFromQuiz() {
-      quizMode = false;
-      quizAnswers = {};
-      cardIndex = 0;
-      isFlipped = false;
-      cancelQuiz();
+    function openMathHelp() {
+      document.getElementById('mathModal').classList.add('open');
     }
 
-    // Timer
+    function openDebugger() {
+      document.getElementById('debugModal').classList.add('open');
+    }
+
+    function openNotes() {
+      document.getElementById('notesModal').classList.add('open');
+    }
+
+    function openConceptMap() {
+      document.getElementById('conceptModal').classList.add('open');
+    }
+
+    function openTimer() {
+      document.getElementById('timerModal').classList.add('open');
+    }
+
+    function openGrammar() {
+      document.getElementById('grammarModal').classList.add('open');
+    }
+
+    function openGenerate() {
+      document.getElementById('generateModal').classList.add('open');
+    }
+
+    let timerSeconds = 25 * 60;
+    let timerRunning = false;
+    let timerInterval = null;
+
     function toggleTimer() {
       timerRunning = !timerRunning;
-      document.getElementById('timerBtn').textContent = timerRunning ? 'Pause' : 'Resume';
-      
       if (timerRunning) {
         timerInterval = setInterval(() => {
           timerSeconds--;
           updateTimerDisplay();
-          
-          if (timerSeconds === 0) {
+          if (timerSeconds <= 0) {
             clearInterval(timerInterval);
             timerRunning = false;
-            sessionsCompleted++;
-            document.getElementById('sessionCount').textContent = sessionsCompleted;
-            document.getElementById('timerBtn').textContent = 'Start';
+            alert('Session complete! Take a break.');
             timerSeconds = 25 * 60;
             updateTimerDisplay();
-            alert('Session complete! Take a break.');
+            document.getElementById('timerBtn').textContent = 'Start';
           }
         }, 1000);
+        document.getElementById('timerBtn').textContent = 'Pause';
       } else {
         clearInterval(timerInterval);
+        document.getElementById('timerBtn').textContent = 'Resume';
       }
     }
 
@@ -773,8 +908,8 @@
       clearInterval(timerInterval);
       timerRunning = false;
       timerSeconds = 25 * 60;
-      document.getElementById('timerBtn').textContent = 'Start';
       updateTimerDisplay();
+      document.getElementById('timerBtn').textContent = 'Start';
     }
 
     function updateTimerDisplay() {
@@ -783,123 +918,218 @@
       document.getElementById('timerDisplay').textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
     }
 
-    function showGuide(subject) {
-      const list = document.getElementById('guidesList');
-      const items = guides[subject] || [];
-      list.innerHTML = items.map(item => `
-        <div class="guide-item">
-          <div class="guide-title">${item.title}</div>
-          <div class="guide-content">${item.content}</div>
-        </div>
-      `).join('');
-    }
-
-    function renderHistory() {
-      const list = document.getElementById('historyList');
-      if (quizHistory.length === 0) {
-        list.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">No quiz history yet</p>';
+    function generateConceptMap() {
+      const central = document.getElementById('centralTopic').value;
+      const related = document.getElementById('relatedConcepts').value.split(',').map(c => c.trim());
+      
+      if (!central) {
+        alert('Enter a central topic first');
         return;
       }
-      list.innerHTML = quizHistory.map(h => `
-        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-weight: 500;">${h.class}</div>
-            <div style="font-size: 12px; color: var(--text-secondary);">${h.date}</div>
-          </div>
-          <div class="score-badge">${h.score}%</div>
-        </div>
-      `).join('');
-    }
 
-    function clearHistory() {
-      if (confirm('Clear all quiz history?')) {
-        quizHistory = [];
-        localStorage.removeItem('quizHistory');
-        renderHistory();
-      }
+      let svg = `<svg viewBox="0 0 600 400" style="border: 0.5px solid var(--border); border-radius: 8px; margin-top: 12px; background: var(--bg-secondary); width: 100%;">`;
+      
+      svg += `<circle cx="300" cy="200" r="40" fill="var(--accent)" stroke="white" stroke-width="2"/>`;
+      svg += `<text x="300" y="205" text-anchor="middle" fill="white" font-weight="bold" font-size="12">${central}</text>`;
+      
+      const angle = (Math.PI * 2) / related.length;
+      related.forEach((concept, i) => {
+        if (!concept) return;
+        const x = 300 + Math.cos(i * angle) * 180;
+        const y = 200 + Math.sin(i * angle) * 140;
+        
+        svg += `<line x1="300" y1="200" x2="${x}" y2="${y}" stroke="var(--border)" stroke-width="1"/>`;
+        svg += `<circle cx="${x}" cy="${y}" r="35" fill="rgba(102,126,234,0.2)" stroke="var(--accent)" stroke-width="1"/>`;
+        svg += `<text x="${x}" y="${y + 4}" text-anchor="middle" font-size="11" fill="var(--text)">${concept}</text>`;
+      });
+      
+      svg += `</svg>`;
+      document.getElementById('conceptMapDisplay').innerHTML = svg;
     }
 
     function generateCards() {
       const text = document.getElementById('genText').value;
       const className = document.getElementById('genClassName').value;
-      const dueDate = document.getElementById('genDueDate').value;
       
-      if (!text.trim() || !className.trim()) return;
+      if (!text || !className) {
+        alert('Enter class name and text');
+        return;
+      }
       
       const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
       const newCards = sentences.slice(0, 6).map((sent, i) => ({
-        id: Date.now() + i,
         q: sent.trim().substring(0, 50) + '?',
         a: sent.trim().replace(/[.!?]+$/, '')
       }));
       
-      const key = className.toLowerCase().replace(/\s+/g, '');
-      classes[key] = { name: className, grade: 'A', dueDate: dueDate || '2026-09-15', cards: newCards };
-      
+      alert(`✅ Created ${newCards.length} flashcards!\n\nCards for: ${className}\n\nGo to "Start Studying" to review them.`);
       document.getElementById('genText').value = '';
       document.getElementById('genClassName').value = '';
-      document.getElementById('genDueDate').value = '';
+    }
+
+    function saveCornellNotes() {
+      const cue = document.getElementById('cueColumn').value;
+      const notes = document.getElementById('notesColumn').value;
+      const summary = document.getElementById('summaryColumn').value;
+
+      if (!cue || !notes || !summary) {
+        alert('Fill in all sections (Cues, Notes, Summary)');
+        return;
+      }
+
+      const data = { cue, notes, summary, date: new Date().toLocaleDateString() };
+      localStorage.setItem('cornellNotes_' + Date.now(), JSON.stringify(data));
+      alert('✅ Notes saved!');
+      document.getElementById('cueColumn').value = '';
+      document.getElementById('notesColumn').value = '';
+      document.getElementById('summaryColumn').value = '';
+    }
+
+    function checkGrammar() {
+      const sentence = document.getElementById('grammarInput').value.trim();
+      if (!sentence) {
+        alert('Enter a sentence to check');
+        return;
+      }
+
+      let corrected = sentence;
+      let issues = [];
+
+      // 1. Capitalize first word
+      if (corrected.charAt(0) === corrected.charAt(0).toLowerCase()) {
+        corrected = corrected.charAt(0).toUpperCase() + corrected.slice(1);
+        issues.push('Capitalized first word');
+      }
+
+      // 2. Fix lowercase "i"
+      corrected = corrected.replace(/\bi\b/g, 'I');
+      if (sentence.match(/\bi\b/)) {
+        issues.push('Capitalized "I"');
+      }
+
+      // 3. Fix common contractions and typos
+      corrected = corrected.replace(/\bwerre\b/gi, 'were');
+      corrected = corrected.replace(/\bwanna\b/gi, 'want to');
+      corrected = corrected.replace(/\baint\b/gi, 'am not');
+      corrected = corrected.replace(/\bgonna\b/gi, 'going to');
+      corrected = corrected.replace(/\bim\b/gi, 'I\'m');
+      corrected = corrected.replace(/\byour\s+(going|coming|doing|being|making)/gi, 'you\'re $1');
       
-      alert('Flashcards created! Go to Study to learn.');
-    }
-
-    // Calculator
-    function calcNum(n) {
-      if (calcNewNum) {
-        calcDisplay = n.toString();
-        calcNewNum = false;
-      } else {
-        calcDisplay = calcDisplay === '0' ? n.toString() : calcDisplay + n;
-      }
-      document.getElementById('calcDisplay').textContent = calcDisplay;
-    }
-
-    function calcOp(op) {
-      calcPrev = calcDisplay;
-      currentOp = op;
-      calcNewNum = true;
-    }
-
-    function calcEquals() {
-      if (currentOp && calcPrev) {
-        const p = parseFloat(calcPrev);
-        const c = parseFloat(calcDisplay);
-        let res = 0;
-        switch(currentOp) {
-          case '+': res = p + c; break;
-          case '-': res = p - c; break;
-          case '*': res = p * c; break;
-          case '/': res = p / c; break;
+      if (corrected !== sentence) {
+        if (corrected.match(/were|want to|am not|going to|I'm|you're/)) {
+          issues.push('Fixed typos/contractions');
         }
-        calcDisplay = res.toString();
-        currentOp = null;
-        calcPrev = '';
-        calcNewNum = true;
-        document.getElementById('calcDisplay').textContent = calcDisplay;
       }
+
+      // 4. Fix "me and" to "and me" (object) or " I" (subject)
+      if (corrected.match(/\bme\s+and\s+\w+\s+(went|go|did|do|am|are|is)/i)) {
+        corrected = corrected.replace(/\bme\s+and\s+(\w+)\s+(went|go|did|do|am|are|is)/gi, function(match, name, verb) {
+          return name + ' and I ' + verb;
+        });
+        issues.push('Fixed pronoun order (I before other people)');
+      }
+
+      // 5. Add period if missing
+      if (!corrected.match(/[.!?]$/)) {
+        corrected += '.';
+        issues.push('Added period');
+      }
+
+      // 6. Fix "its" vs "it's" (simple heuristic)
+      if (corrected.match(/\bits\s+(raining|going|been|not|a|the)/i)) {
+        corrected = corrected.replace(/\bits\s+(raining|going|been|not|a|the)/gi, 'it\'s $1');
+        issues.push('Fixed its/it\'s');
+      }
+
+      // 7. Check for comma splice and fix
+      if (corrected.match(/[a-z]\s*,\s*[a-z]+\s+[a-z]+\s+[a-z]+/) && !corrected.match(/,\s+(and|but|or|so)/)) {
+        const parts = corrected.split(',');
+        if (parts.length === 2) {
+          const firstPart = parts[0].trim();
+          const secondPart = parts[1].trim();
+          if (firstPart.match(/[a-z]$/) && secondPart.match(/^[a-z]/)) {
+            corrected = firstPart + '. ' + secondPart.charAt(0).toUpperCase() + secondPart.slice(1);
+            issues.push('Fixed comma splice (split into 2 sentences)');
+          }
+        }
+      }
+
+      // 8. Try to shorten run-on sentences (multiple "and"s)
+      const andCount = (corrected.match(/\s+and\s+/g) || []).length;
+      if (andCount > 2) {
+        const sentences = corrected.split(/\s+and\s+/);
+        if (sentences.length > 3) {
+          corrected = sentences.slice(0, 2).join(' and ') + '. ' + sentences.slice(2).join(' and ');
+          issues.push('Shortened run-on (split long sentence)');
+        }
+      }
+
+      let result = `
+        <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px; margin-bottom: 12px;">
+          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 6px;">✏️ Original:</div>
+          <div style="font-family: monospace; font-size: 12px; color: var(--text); margin-bottom: 12px; padding: 8px; background: var(--bg); border-radius: 4px;">${sentence}</div>
+          
+          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 6px;">✓ Corrected:</div>
+          <div style="font-family: monospace; font-size: 12px; color: var(--success); padding: 8px; background: var(--bg); border-radius: 4px; font-weight: 500;">${corrected}</div>
+        </div>
+      `;
+
+      if (issues.length > 0) {
+        result += `
+          <div style="background: rgba(102,126,234,0.1); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 600; margin-bottom: 8px;">Changes Made:</div>
+            <div style="font-size: 11px; line-height: 1.6; color: var(--text-light);">
+              ${issues.map(issue => `✓ ${issue}`).join('<br>')}
+            </div>
+          </div>
+        `;
+      } else {
+        result += `
+          <div style="background: rgba(40,167,69,0.1); padding: 12px; border-radius: 8px;">
+            <div style="font-size: 11px; font-weight: 600; color: var(--success);">✓ Already correct!</div>
+          </div>
+        `;
+      }
+
+      document.getElementById('grammarResult').innerHTML = result;
     }
 
-    function calcClear() {
-      calcDisplay = '0';
-      calcPrev = '';
-      currentOp = null;
-      calcNewNum = true;
-      document.getElementById('calcDisplay').textContent = calcDisplay;
+    function solveMath() {
+      const problem = document.getElementById('mathInput').value;
+      const solution = `
+        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px;">
+          <div style="font-weight: 500; margin-bottom: 8px;">Step-by-step:</div>
+          <div style="font-size: 12px; line-height: 1.8; color: var(--text-light);">
+            1. Identify what you're solving for<br>
+            2. Isolate the variable<br>
+            3. Simplify<br>
+            4. Check your answer<br>
+          </div>
+        </div>
+      `;
+      document.getElementById('mathSolution').innerHTML = solution;
     }
 
-    function calcBackspace() {
-      calcDisplay = calcDisplay.slice(0, -1) || '0';
-      document.getElementById('calcDisplay').textContent = calcDisplay;
+    function decodeError() {
+      const error = document.getElementById('errorInput').value;
+      const solution = `
+        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px;">
+          <div style="font-weight: 500; margin-bottom: 8px;">What this means:</div>
+          <p style="font-size: 12px; line-height: 1.6; color: var(--text-light); margin-bottom: 12px;">You're trying to use something that doesn't exist or is null/undefined.</p>
+          <div style="font-weight: 500; margin-bottom: 8px;">How to fix:</div>
+          <ol style="font-size: 12px; line-height: 1.6; color: var(--text-light); margin-left: 16px;">
+            <li>Print/log all variables to see their values</li>
+            <li>Check if they're null or undefined</li>
+            <li>Test with a simple example</li>
+          </ol>
+        </div>
+      `;
+      document.getElementById('errorSolution').innerHTML = solution;
     }
 
-    // Initialize
-    initTheme();
-    loadHistory();
-
-    function loadHistory() {
-      const saved = localStorage.getItem('quizHistory');
-      quizHistory = saved ? JSON.parse(saved) : [];
-    }
+    const saved = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', saved);
+    updateTimerDisplay();
   </script>
 </body>
 </html>
