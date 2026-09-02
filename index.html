@@ -443,9 +443,31 @@
   </style>
 </head>
 <body>
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #00bcd4 0%, #00897b 100%); display: flex; align-items: center; justify-content: center; z-index: 200; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+    <div style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); text-align: center; max-width: 300px; width: 90%;">
+      <div style="font-size: 48px; margin-bottom: 16px;">🏝️</div>
+      <div style="font-size: 24px; font-weight: 700; margin-bottom: 8px; color: #00897b;">Study Hub</div>
+      <div style="font-size: 12px; color: #666; margin-bottom: 24px;">Your accelerated learning space</div>
+      
+      <div style="margin-bottom: 16px;">
+        <input type="password" id="passwordInput" placeholder="Enter password" style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; width: 100%; font-size: 14px; box-sizing: border-box; text-align: center;" onkeypress="if(event.key === 'Enter') loginUser()">
+      </div>
+      
+      <button onclick="loginUser()" style="padding: 12px 24px; background: linear-gradient(135deg, #00bcd4 0%, #00897b 100%); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%;">Login</button>
+      
+      <div id="loginError" style="color: #ff6b6b; font-size: 12px; margin-top: 12px; display: none;"></div>
+    </div>
+  </div>
+
+  <!-- MAIN APP (hidden until login) -->
+  <div id="mainApp" style="display: none;">
   <div class="header">
     <h1>🏝️ Study Hub</h1>
-    <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+    <div style="display: flex; gap: 12px;">
+      <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+      <button onclick="logoutUser()" style="padding: 6px 12px; background: #ff6b6b; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;">Logout</button>
+    </div>
   </div>
 
   <!-- TROPICAL HEADER GRAPHIC -->
@@ -567,6 +589,16 @@
       </div>
     </div>
 
+    <!-- DATA BACKUP -->
+    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 14px; margin-bottom: 16px; border-left: 4px solid #667eea;">
+      <div style="font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--text);">💾 Backup & Restore</div>
+      <div style="display: flex; gap: 8px;">
+        <button onclick="exportData()" style="flex: 1; padding: 8px; background: #667eea; color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">📥 Export Data</button>
+        <button onclick="importData()" style="flex: 1; padding: 8px; background: #51cf66; color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">📤 Import Data</button>
+      </div>
+      <div style="font-size: 10px; color: var(--text-light); margin-top: 8px; text-align: center;">Backup all your data before exams</div>
+    </div>
+
     
     <div class="collapsible-section">
       <button class="collapsible-header" onclick="toggleCollapsible(event)">
@@ -575,33 +607,11 @@
       </button>
       <div class="collapsible-content">
         <div class="collapsible-body">
-          <div class="progress-card">
-            <div class="progress-header">
-              <div class="progress-title">Math</div>
-              <div class="progress-grade">A-</div>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 90%;"></div>
-            </div>
+          <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <button onclick="setClassType('hs')" id="hsClassBtn" style="flex: 1; padding: 8px; border: 2px solid var(--accent); border-radius: 6px; background: var(--accent); color: white; font-size: 12px; font-weight: 600; cursor: pointer;">🏫 High School</button>
+            <button onclick="setClassType('college')" id="collegeClassBtn" style="flex: 1; padding: 8px; border: 2px solid var(--border); border-radius: 6px; background: transparent; color: var(--text); font-size: 12px; font-weight: 600; cursor: pointer;">🎓 College</button>
           </div>
-          <div class="progress-card">
-            <div class="progress-header">
-              <div class="progress-title">English</div>
-              <div class="progress-grade">B+</div>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 85%;"></div>
-            </div>
-          </div>
-          <div class="progress-card">
-            <div class="progress-header">
-              <div class="progress-title">Science</div>
-              <div class="progress-grade">A</div>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 95%;"></div>
-            </div>
-          </div>
+          <div id="classesDisplay"></div>
         </div>
       </div>
     </div>
@@ -1122,6 +1132,7 @@
       </div>
     </div>
   </div>
+  </div> <!-- End mainApp -->
 
   <script>
     let cards = [
@@ -1677,6 +1688,7 @@
         priority,
         link: link || null,
         status: 'to-do',
+        classType: 'hs', // Default to HS for now
         dateAdded: new Date().toISOString()
       };
 
@@ -1860,6 +1872,7 @@
         classname,
         assignment,
         score,
+        classType: 'hs', // Default to HS for now
         date: new Date().toISOString()
       };
 
@@ -2286,12 +2299,226 @@
       classBtn.style.color = 'var(--text)';
     }
     
+    // Initialize class type buttons
+    const hsClassBtn = document.getElementById('hsClassBtn');
+    const collegeClassBtn = document.getElementById('collegeClassBtn');
+    if (hsClassBtn) {
+      hsClassBtn.style.background = 'var(--accent)';
+      hsClassBtn.style.borderColor = 'var(--accent)';
+      hsClassBtn.style.color = 'white';
+    }
+    if (collegeClassBtn) {
+      collegeClassBtn.style.background = 'transparent';
+      collegeClassBtn.style.borderColor = 'var(--border)';
+      collegeClassBtn.style.color = 'var(--text)';
+    }
+    
     renderAssignments();
     renderGrades();
     renderPlan();
     updateGradeDashboard();
     updateDueThisWeek();
     renderDailyTasks();
+    renderClasses();
+
+    
+    // CLASS TYPE (HS vs College)
+    let currentClassType = 'hs';
+    
+    function setClassType(type) {
+      currentClassType = type;
+      
+      const hsBtn = document.getElementById('hsClassBtn');
+      const collegeBtn = document.getElementById('collegeClassBtn');
+      
+      if (type === 'hs') {
+        hsBtn.style.background = 'var(--accent)';
+        hsBtn.style.borderColor = 'var(--accent)';
+        hsBtn.style.color = 'white';
+        
+        collegeBtn.style.background = 'transparent';
+        collegeBtn.style.borderColor = 'var(--border)';
+        collegeBtn.style.color = 'var(--text)';
+      } else {
+        hsBtn.style.background = 'transparent';
+        hsBtn.style.borderColor = 'var(--border)';
+        hsBtn.style.color = 'var(--text)';
+        
+        collegeBtn.style.background = 'var(--accent)';
+        collegeBtn.style.borderColor = 'var(--accent)';
+        collegeBtn.style.color = 'white';
+      }
+      
+      renderClasses();
+    }
+    
+    function renderClasses() {
+      let assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+      let grades = JSON.parse(localStorage.getItem('grades') || '[]');
+      
+      const assignmentsForType = assignments.filter(a => a.classType === currentClassType);
+      const gradesForType = grades.filter(g => g.classType === currentClassType);
+      
+      // Get unique classes
+      const classes = [...new Set(assignmentsForType.map(a => a.classname))];
+      
+      if (classes.length === 0) {
+        document.getElementById('classesDisplay').innerHTML = '<div style="text-align: center; color: var(--text-light); font-size: 12px; padding: 20px;">No classes yet</div>';
+        return;
+      }
+      
+      let html = '';
+      classes.forEach(className => {
+        const classGrades = gradesForType.filter(g => g.classname === className);
+        let avg = 0;
+        
+        if (classGrades.length > 0) {
+          const scores = classGrades.map(g => parseInt(g.score.replace(/[^0-9]/g, '')) || 80);
+          avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+        }
+        
+        let letter = 'N/A';
+        if (avg >= 90) letter = 'A';
+        else if (avg >= 80) letter = 'B';
+        else if (avg >= 70) letter = 'C';
+        else letter = 'D';
+        
+        html += `
+          <div class="progress-card">
+            <div class="progress-header">
+              <div class="progress-title">${className}</div>
+              <div class="progress-grade">${letter}</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${Math.min(avg, 100)}%;"></div>
+            </div>
+          </div>
+        `;
+      });
+      
+      document.getElementById('classesDisplay').innerHTML = html;
+    }
+    
+    // DATA BACKUP & RESTORE
+    function exportData() {
+      const allData = {
+        assignments: JSON.parse(localStorage.getItem('assignments') || '[]'),
+        grades: JSON.parse(localStorage.getItem('grades') || '[]'),
+        submissions: JSON.parse(localStorage.getItem('submissions') || '[]'),
+        weeklyPlan: JSON.parse(localStorage.getItem('weeklyPlan') || '[]'),
+        dailyTasks: JSON.parse(localStorage.getItem('dailyTasks') || '[]'),
+        theme: localStorage.getItem('theme') || 'light',
+        exportDate: new Date().toISOString()
+      };
+      
+      const dataStr = JSON.stringify(allData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `StudyHub_Backup_${new Date().toISOString().split('T')[0]}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+      
+      alert('✅ Data exported! File downloaded.');
+    }
+    
+    function importData() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const data = JSON.parse(event.target.result);
+            
+            if (data.assignments) localStorage.setItem('assignments', JSON.stringify(data.assignments));
+            if (data.grades) localStorage.setItem('grades', JSON.stringify(data.grades));
+            if (data.submissions) localStorage.setItem('submissions', JSON.stringify(data.submissions));
+            if (data.weeklyPlan) localStorage.setItem('weeklyPlan', JSON.stringify(data.weeklyPlan));
+            if (data.dailyTasks) localStorage.setItem('dailyTasks', JSON.stringify(data.dailyTasks));
+            if (data.theme) localStorage.setItem('theme', data.theme);
+            
+            alert('✅ Data restored successfully! Refreshing...');
+            location.reload();
+          } catch (error) {
+            alert('❌ Error importing data. Make sure it\'s a valid backup file.');
+            console.error(error);
+          }
+        };
+        reader.readAsText(file);
+      };
+      
+      input.click();
+    }
+
+    // LOGIN SYSTEM
+    const DEFAULT_PASSWORD = 'study2028'; // Change this to your password
+    
+    function loginUser() {
+      try {
+        const password = document.getElementById('passwordInput').value;
+        const errorDiv = document.getElementById('loginError');
+        
+        if (!password) {
+          errorDiv.textContent = 'Enter a password';
+          errorDiv.style.display = 'block';
+          return;
+        }
+        
+        if (password === DEFAULT_PASSWORD) {
+          localStorage.setItem('studyHubLoggedIn', 'true');
+          
+          const loginScreen = document.getElementById('loginScreen');
+          const mainApp = document.getElementById('mainApp');
+          
+          if (loginScreen) loginScreen.style.display = 'none';
+          if (mainApp) mainApp.style.display = 'block';
+          
+          errorDiv.style.display = 'none';
+        } else {
+          errorDiv.textContent = 'Wrong password';
+          errorDiv.style.display = 'block';
+          document.getElementById('passwordInput').value = '';
+        }
+      } catch (e) {
+        console.error('Login error:', e);
+        alert('Error logging in. Try refreshing the page.');
+      }
+    }
+    
+    function logoutUser() {
+      if (confirm('Log out of Study Hub?')) {
+        try {
+          // Clear login
+          localStorage.removeItem('studyHubLoggedIn');
+          
+          // Show login screen, hide app
+          document.getElementById('loginScreen').style.display = 'flex';
+          document.getElementById('mainApp').style.display = 'none';
+          document.getElementById('passwordInput').value = '';
+          document.getElementById('passwordInput').focus();
+          
+          console.log('Logged out successfully');
+        } catch (e) {
+          console.error('Logout error:', e);
+          alert('Error: ' + e.message + '\n\nTry refreshing the page.');
+        }
+      }
+    }
+    
+    // Check if already logged in
+    window.addEventListener('load', function() {
+      if (localStorage.getItem('studyHubLoggedIn') === 'true') {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('mainApp').style.display = 'block';
+      }
+    });
   </script>
 </body>
 </html>
