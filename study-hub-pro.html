@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homework Study Hub Pro</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --border: #e0e0e0;
+      --accent: #667eea;
+      --success: #28a745;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #1a1a1a;
+      --bg-secondary: #2d2d2d;
+      --text-primary: #e0e0e0;
+      --text-secondary: #b0b0b0;
+      --border: #404040;
+      --accent: #7b88dd;
+      --success: #32c754;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 16px;
+      transition: all 0.3s;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+    }
+
+    .theme-toggle {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-primary);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 20px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .nav button {
+      padding: 12px 16px;
+      border: none;
+      background: transparent;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .nav button.active {
+      border-bottom-color: var(--accent);
+      color: var(--text-primary);
+    }
+
+    .content {
+      display: none;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+    }
+
+    .class-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .grade-display {
+      background: var(--accent);
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 0.5px solid var(--border);
+    }
+
+    .input-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text-secondary);
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: inherit;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .timer-display {
+      font-size: 48px;
+      font-weight: 500;
+      text-align: center;
+      font-family: monospace;
+      margin: 20px 0;
+      color: var(--accent);
+    }
+
+    .timer-label {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .flashcard {
+      background: var(--accent);
+      color: white;
+      padding: 40px 20px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 16px;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .notes-box {
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .notes-label {
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+
+    .assignment-item {
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .assignment-info {
+      flex: 1;
+    }
+
+    .assignment-title {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .assignment-meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .due-badge {
+      background: #dc3545;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .guide-item {
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .guide-title {
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .guide-content {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .score-badge {
+      background: var(--success);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .full-width {
+      width: 100%;
+    }
+
+    .flex {
+      display: flex;
+      gap: 8px;
+    }
+
+    .flex button {
+      flex: 1;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>📚 Study Hub Pro</h1>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+  </div>
+
+  <div class="container">
+    <div class="nav">
+      <button class="nav-btn active" onclick="switchTab('grades', this)">Classes</button>
+      <button class="nav-btn" onclick="switchTab('due-dates', this)">Due Dates</button>
+      <button class="nav-btn" onclick="switchTab('flashcards', this)">Study</button>
+      <button class="nav-btn" onclick="switchTab('timer', this)">Timer</button>
+      <button class="nav-btn" onclick="switchTab('guides', this)">Guides</button>
+      <button class="nav-btn" onclick="switchTab('history', this)">History</button>
+      <button class="nav-btn" onclick="switchTab('generate', this)">Generate</button>
+      <button class="nav-btn" onclick="switchTab('calculator', this)">Calc</button>
+    </div>
+
+    <!-- Classes Tab -->
+    <div id="grades" class="content active">
+      <div class="grid" id="gradeGrid"></div>
+    </div>
+
+    <!-- Due Dates Tab -->
+    <div id="due-dates" class="content">
+      <div id="dueList"></div>
+    </div>
+
+    <!-- Study/Flashcards Tab -->
+    <div id="flashcards" class="content">
+      <div style="margin-bottom: 16px;">
+        <label>Select class</label>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;" id="classButtons"></div>
+      </div>
+
+      <div id="cardsView">
+        <div class="notes-box">
+          <div class="notes-label">📝 Study Notes</div>
+          <textarea id="studyNotes" placeholder="Write what you're learning..."></textarea>
+        </div>
+
+        <div class="flashcard" id="cardDisplay" onclick="flipCard()">
+          <div style="font-size: 11px; opacity: 0.9; margin-bottom: 12px;">Click to flip</div>
+          <div id="cardContent" style="font-size: 16px; font-weight: 500;"></div>
+        </div>
+
+        <div class="flex" style="margin-bottom: 12px;">
+          <button onclick="prevCard()" class="btn btn-secondary">← Prev</button>
+          <div style="flex: 1; text-align: center; font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; justify-content: center;">
+            <span id="cardNum">1</span> / <span id="cardTotal">3</span>
+          </div>
+          <button onclick="nextCard()" class="btn btn-secondary">Next →</button>
+        </div>
+
+        <button id="quizBtn" onclick="startQuiz()" class="btn btn-success full-width">Start Quiz</button>
+
+        <div id="quizView" class="hidden" style="margin-top: 16px;">
+          <div id="quizQuestions"></div>
+          <button onclick="submitQuiz()" class="btn btn-primary full-width" style="margin-bottom: 8px;">Submit</button>
+          <button onclick="cancelQuiz()" class="btn btn-secondary full-width">Cancel</button>
+        </div>
+
+        <div id="quizResults" class="hidden" style="margin-top: 16px;">
+          <div style="background: var(--bg-secondary); padding: 24px; border-radius: 12px; text-align: center; margin-bottom: 16px;">
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">Score</div>
+            <div style="font-size: 36px; font-weight: 500;" id="scoreValue">100%</div>
+          </div>
+          <div id="resultsList"></div>
+          <button onclick="backFromQuiz()" class="btn btn-primary full-width">Back</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timer Tab -->
+    <div id="timer" class="content">
+      <div style="background: var(--bg-secondary); padding: 20px; border-radius: 12px; text-align: center;">
+        <div class="timer-label">Focus Time</div>
+        <div class="timer-display" id="timerDisplay">25:00</div>
+        <div class="flex">
+          <button id="timerBtn" onclick="toggleTimer()" class="btn btn-primary">Start</button>
+          <button onclick="resetTimer()" class="btn btn-secondary">Reset</button>
+        </div>
+        <div style="margin-top: 16px; font-size: 12px; color: var(--text-secondary);">
+          Sessions completed: <span id="sessionCount">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guides Tab -->
+    <div id="guides" class="content">
+      <div style="margin-bottom: 16px;">
+        <label>Select subject</label>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
+          <button class="btn btn-secondary" onclick="showGuide('math')">Math</button>
+          <button class="btn btn-secondary" onclick="showGuide('biology')">Biology</button>
+          <button class="btn btn-secondary" onclick="showGuide('chemistry')">Chemistry</button>
+          <button class="btn btn-secondary" onclick="showGuide('english')">English</button>
+          <button class="btn btn-secondary" onclick="showGuide('history')">History</button>
+        </div>
+      </div>
+      <div id="guidesList"></div>
+    </div>
+
+    <!-- History Tab -->
+    <div id="history" class="content">
+      <div id="historyList"></div>
+      <button onclick="clearHistory()" class="btn btn-secondary" style="margin-top: 16px;">Clear History</button>
+    </div>
+
+    <!-- Generate Tab -->
+    <div id="generate" class="content">
+      <div class="input-group">
+        <label>Class name</label>
+        <input type="text" id="genClassName" placeholder="e.g., Physics">
+      </div>
+
+      <div class="input-group">
+        <label>Due date</label>
+        <input type="date" id="genDueDate">
+      </div>
+
+      <div class="input-group">
+        <label>Paste text</label>
+        <textarea id="genText" placeholder="Copy and paste assignment text..."></textarea>
+      </div>
+
+      <button onclick="generateCards()" class="btn btn-primary full-width">Generate Flashcards</button>
+    </div>
+
+    <!-- Calculator Tab -->
+    <div id="calculator" class="content">
+      <div style="background: var(--bg-secondary); padding: 16px; border-radius: 12px;">
+        <div style="background: var(--bg-primary); padding: 14px; border-radius: 8px; text-align: right; font-size: 20px; font-weight: 500; margin-bottom: 12px; min-height: 36px;" id="calcDisplay">0</div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;">
+          <button onclick="calcClear()" class="btn btn-secondary">C</button>
+          <button onclick="calcBackspace()" class="btn btn-secondary">⌫</button>
+          <button onclick="calcOp('/')" class="btn btn-primary">÷</button>
+          <button onclick="calcOp('*')" class="btn btn-primary">×</button>
+
+          <button onclick="calcNum(7)" class="btn btn-secondary">7</button>
+          <button onclick="calcNum(8)" class="btn btn-secondary">8</button>
+          <button onclick="calcNum(9)" class="btn btn-secondary">9</button>
+          <button onclick="calcOp('-')" class="btn btn-primary">−</button>
+
+          <button onclick="calcNum(4)" class="btn btn-secondary">4</button>
+          <button onclick="calcNum(5)" class="btn btn-secondary">5</button>
+          <button onclick="calcNum(6)" class="btn btn-secondary">6</button>
+          <button onclick="calcOp('+')" class="btn btn-primary">+</button>
+
+          <button onclick="calcNum(1)" class="btn btn-secondary">1</button>
+          <button onclick="calcNum(2)" class="btn btn-secondary">2</button>
+          <button onclick="calcNum(3)" class="btn btn-secondary">3</button>
+          <button onclick="calcEquals()" class="btn btn-success" style="grid-row: span 2;">=</button>
+
+          <button onclick="calcNum(0)" class="btn btn-secondary" style="grid-column: span 2;">0</button>
+          <button onclick="calcNum('.')" class="btn btn-secondary">.</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let classes = {
+      math: { name: 'Math', grade: 'A-', dueDate: '2026-09-10', cards: [
+        { id: 1, q: 'Solve: 2x + 8 = 16', a: 'x = 4' },
+        { id: 2, q: 'Pythagorean theorem?', a: 'a² + b² = c²' },
+      ]},
+      english: { name: 'English', grade: 'B+', dueDate: '2026-09-08', cards: [
+        { id: 4, q: 'Thesis statement?', a: 'Main argument of the essay' },
+      ]},
+      science: { name: 'Science', grade: 'A', dueDate: '2026-09-12', cards: [
+        { id: 6, q: 'Photosynthesis?', a: 'Process plants convert sunlight to energy' },
+      ]},
+    };
+
+    const guides = {
+      math: [
+        { title: 'Solving Linear Equations', content: '1. Isolate variable on one side 2. Simplify each side 3. Divide by coefficient' },
+        { title: 'Pythagorean Theorem', content: 'a² + b² = c². Used for right triangles. Find any missing side.' },
+      ],
+      biology: [
+        { title: 'Cell Structure', content: 'Nucleus (DNA), Mitochondria (energy), Ribosomes (protein), Chloroplasts (photosynthesis in plants)' },
+        { title: 'Photosynthesis', content: '6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂. Happens in chloroplasts.' },
+      ],
+      chemistry: [
+        { title: 'Chemical Bonds', content: 'Ionic: transfer electrons. Covalent: share electrons. Metallic: sea of electrons.' },
+        { title: 'Balancing Equations', content: 'Count atoms on each side. Adjust coefficients until equal.' },
+      ],
+      english: [
+        { title: 'Essay Structure', content: 'Intro (hook + thesis) → Body (topic sentence + evidence + analysis) → Conclusion (restate thesis)' },
+        { title: 'Literary Devices', content: 'Metaphor, simile, imagery, symbolism, irony. Identify and analyze their effect.' },
+      ],
+      history: [
+        { title: 'Analyze Sources', content: 'Who wrote it? When? Why? What perspective? How reliable?' },
+        { title: 'Timeline Events', content: 'Identify causes and effects. Look for patterns and connections.' },
+      ],
+    };
+
+    let selectedClass = 'math';
+    let cardIndex = 0;
+    let isFlipped = false;
+    let quizMode = false;
+    let quizAnswers = {};
+    let timerSeconds = 25 * 60;
+    let timerRunning = false;
+    let sessionsCompleted = 0;
+    let quizHistory = [];
+
+    // Timer interval
+    let timerInterval = null;
+
+    // Calculator
+    let calcDisplay = '0';
+    let calcPrev = '';
+    let currentOp = null;
+    let calcNewNum = true;
+
+    // Theme
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    function initTheme() {
+      const saved = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+
+    // Tab switching
+    function switchTab(tab, btn) {
+      document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tab).classList.add('active');
+      if (btn) btn.classList.add('active');
+      
+      if (tab === 'grades') renderGrades();
+      if (tab === 'due-dates') renderDueDates();
+      if (tab === 'flashcards') renderFlashcards();
+      if (tab === 'history') renderHistory();
+    }
+
+    function renderGrades() {
+      const grid = document.getElementById('gradeGrid');
+      grid.innerHTML = Object.entries(classes).map(([key, cls]) => `
+        <div class="card class-card">
+          <div>
+            <div style="font-size: 14px; font-weight: 500; margin-bottom: 12px;">${cls.name}</div>
+            <div class="grade-display">${cls.grade}</div>
+          </div>
+          <button onclick="selectClass('${key}'); switchTabFromButton('flashcards');" class="btn btn-primary full-width">Study</button>
+        </div>
+      `).join('');
+    }
+
+    function renderDueDates() {
+      const list = document.getElementById('dueList');
+      const sorted = Object.entries(classes).sort((a, b) => new Date(a[1].dueDate) - new Date(b[1].dueDate));
+      list.innerHTML = sorted.map(([key, cls]) => {
+        const days = Math.ceil((new Date(cls.dueDate) - new Date()) / (1000 * 60 * 60 * 24));
+        return `
+          <div class="assignment-item">
+            <div class="assignment-info">
+              <div class="assignment-title">${cls.name}</div>
+              <div class="assignment-meta">${cls.dueDate} • ${days} days left</div>
+            </div>
+            ${days <= 2 ? '<div class="due-badge">URGENT</div>' : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderFlashcards() {
+      const buttons = document.getElementById('classButtons');
+      buttons.innerHTML = Object.entries(classes).map(([key, cls]) => `
+        <button class="btn ${selectedClass === key ? 'btn-primary' : 'btn-secondary'}" onclick="selectClass('${key}', this)">${cls.name}</button>
+      `).join('');
+      renderCard();
+    }
+
+    function selectClass(key, btn) {
+      selectedClass = key;
+      cardIndex = 0;
+      isFlipped = false;
+      quizMode = false;
+      document.querySelectorAll('#classButtons .btn').forEach(b => {
+        b.classList.remove('btn-primary');
+        b.classList.add('btn-secondary');
+      });
+      if (btn) {
+        btn.classList.remove('btn-secondary');
+        btn.classList.add('btn-primary');
+      }
+      renderFlashcards();
+    }
+
+    function switchTabFromButton(tab) {
+      const buttons = document.querySelectorAll('.nav-btn');
+      let targetBtn = null;
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent === 'Study' && tab === 'flashcards') targetBtn = btn;
+        if (btn.textContent === 'Classes' && tab === 'grades') targetBtn = btn;
+      });
+      switchTab(tab, targetBtn);
+    }
+
+    function renderCard() {
+      const cards = classes[selectedClass].cards;
+      const card = cards[cardIndex];
+      document.getElementById('cardContent').textContent = isFlipped ? card.a : card.q;
+      document.getElementById('cardNum').textContent = cardIndex + 1;
+      document.getElementById('cardTotal').textContent = cards.length;
+    }
+
+    function flipCard() {
+      isFlipped = !isFlipped;
+      renderCard();
+    }
+
+    function nextCard() {
+      const cards = classes[selectedClass].cards;
+      if (cardIndex < cards.length - 1) {
+        cardIndex++;
+        isFlipped = false;
+        renderCard();
+      }
+    }
+
+    function prevCard() {
+      if (cardIndex > 0) {
+        cardIndex--;
+        isFlipped = false;
+        renderCard();
+      }
+    }
+
+    function startQuiz() {
+      quizMode = true;
+      quizAnswers = {};
+      document.getElementById('quizBtn').classList.add('hidden');
+      document.getElementById('cardDisplay').classList.add('hidden');
+      
+      const cards = classes[selectedClass].cards;
+      const html = cards.map(c => `
+        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-bottom: 8px;">
+          <div style="font-size: 12px; font-weight: 500; margin-bottom: 6px;">Q${cards.indexOf(c) + 1}: ${c.q}</div>
+          <input type="text" placeholder="Your answer..." value="${quizAnswers[c.id] || ''}" 
+                 onchange="quizAnswers[${c.id}] = this.value" style="width: 100%; padding: 6px 10px; border: 0.5px solid var(--border); border-radius: 6px; font-size: 12px;">
+        </div>
+      `).join('');
+      
+      document.getElementById('quizQuestions').innerHTML = html;
+      document.getElementById('quizView').classList.remove('hidden');
+    }
+
+    function submitQuiz() {
+      const cards = classes[selectedClass].cards;
+      let score = 0;
+      
+      cards.forEach(c => {
+        const ans = (quizAnswers[c.id] || '').toLowerCase().trim();
+        const correct = c.a.toLowerCase().trim();
+        const keywords = correct.split(' ');
+        if (keywords.some(kw => ans.includes(kw))) score++;
+      });
+      
+      const percent = Math.round((score / cards.length) * 100);
+      document.getElementById('scoreValue').textContent = percent + '%';
+      
+      quizHistory.push({ class: classes[selectedClass].name, score: percent, date: new Date().toLocaleDateString() });
+      localStorage.setItem('quizHistory', JSON.stringify(quizHistory));
+      
+      const results = cards.map(c => {
+        const ans = (quizAnswers[c.id] || '').toLowerCase().trim();
+        const correct = c.a.toLowerCase().trim();
+        const keywords = correct.split(' ');
+        const isCorrect = keywords.some(kw => ans.includes(kw));
+        return `
+          <div style="background: ${isCorrect ? 'rgba(40, 167, 69, 0.1)' : 'rgba(220, 53, 69, 0.1)'}; padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 0.5px solid var(--border);">
+            <div style="font-weight: 500; margin-bottom: 4px;">${isCorrect ? '✓' : '✗'} ${c.q}</div>
+            <div style="font-size: 12px;">You: ${ans || '(blank)'}</div>
+            <div style="font-size: 12px;">Answer: ${c.a}</div>
+          </div>
+        `;
+      }).join('');
+      
+      document.getElementById('resultsList').innerHTML = results;
+      document.getElementById('quizView').classList.add('hidden');
+      document.getElementById('quizResults').classList.remove('hidden');
+    }
+
+    function cancelQuiz() {
+      quizMode = false;
+      document.getElementById('quizBtn').classList.remove('hidden');
+      document.getElementById('cardDisplay').classList.remove('hidden');
+      document.getElementById('quizView').classList.add('hidden');
+      document.getElementById('quizResults').classList.add('hidden');
+    }
+
+    function backFromQuiz() {
+      quizMode = false;
+      quizAnswers = {};
+      cardIndex = 0;
+      isFlipped = false;
+      cancelQuiz();
+    }
+
+    // Timer
+    function toggleTimer() {
+      timerRunning = !timerRunning;
+      document.getElementById('timerBtn').textContent = timerRunning ? 'Pause' : 'Resume';
+      
+      if (timerRunning) {
+        timerInterval = setInterval(() => {
+          timerSeconds--;
+          updateTimerDisplay();
+          
+          if (timerSeconds === 0) {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            sessionsCompleted++;
+            document.getElementById('sessionCount').textContent = sessionsCompleted;
+            document.getElementById('timerBtn').textContent = 'Start';
+            timerSeconds = 25 * 60;
+            updateTimerDisplay();
+            alert('Session complete! Take a break.');
+          }
+        }, 1000);
+      } else {
+        clearInterval(timerInterval);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = 25 * 60;
+      document.getElementById('timerBtn').textContent = 'Start';
+      updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+      document.getElementById('timerDisplay').textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    function showGuide(subject) {
+      const list = document.getElementById('guidesList');
+      const items = guides[subject] || [];
+      list.innerHTML = items.map(item => `
+        <div class="guide-item">
+          <div class="guide-title">${item.title}</div>
+          <div class="guide-content">${item.content}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderHistory() {
+      const list = document.getElementById('historyList');
+      if (quizHistory.length === 0) {
+        list.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">No quiz history yet</p>';
+        return;
+      }
+      list.innerHTML = quizHistory.map(h => `
+        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 500;">${h.class}</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">${h.date}</div>
+          </div>
+          <div class="score-badge">${h.score}%</div>
+        </div>
+      `).join('');
+    }
+
+    function clearHistory() {
+      if (confirm('Clear all quiz history?')) {
+        quizHistory = [];
+        localStorage.removeItem('quizHistory');
+        renderHistory();
+      }
+    }
+
+    function generateCards() {
+      const text = document.getElementById('genText').value;
+      const className = document.getElementById('genClassName').value;
+      const dueDate = document.getElementById('genDueDate').value;
+      
+      if (!text.trim() || !className.trim()) return;
+      
+      const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
+      const newCards = sentences.slice(0, 6).map((sent, i) => ({
+        id: Date.now() + i,
+        q: sent.trim().substring(0, 50) + '?',
+        a: sent.trim().replace(/[.!?]+$/, '')
+      }));
+      
+      const key = className.toLowerCase().replace(/\s+/g, '');
+      classes[key] = { name: className, grade: 'A', dueDate: dueDate || '2026-09-15', cards: newCards };
+      
+      document.getElementById('genText').value = '';
+      document.getElementById('genClassName').value = '';
+      document.getElementById('genDueDate').value = '';
+      
+      alert('Flashcards created! Go to Study to learn.');
+    }
+
+    // Calculator
+    function calcNum(n) {
+      if (calcNewNum) {
+        calcDisplay = n.toString();
+        calcNewNum = false;
+      } else {
+        calcDisplay = calcDisplay === '0' ? n.toString() : calcDisplay + n;
+      }
+      document.getElementById('calcDisplay').textContent = calcDisplay;
+    }
+
+    function calcOp(op) {
+      calcPrev = calcDisplay;
+      currentOp = op;
+      calcNewNum = true;
+    }
+
+    function calcEquals() {
+      if (currentOp && calcPrev) {
+        const p = parseFloat(calcPrev);
+        const c = parseFloat(calcDisplay);
+        let res = 0;
+        switch(currentOp) {
+          case '+': res = p + c; break;
+          case '-': res = p - c; break;
+          case '*': res = p * c; break;
+          case '/': res = p / c; break;
+        }
+        calcDisplay = res.toString();
+        currentOp = null;
+        calcPrev = '';
+        calcNewNum = true;
+        document.getElementById('calcDisplay').textContent = calcDisplay;
+      }
+    }
+
+    function calcClear() {
+      calcDisplay = '0';
+      calcPrev = '';
+      currentOp = null;
+      calcNewNum = true;
+      document.getElementById('calcDisplay').textContent = calcDisplay;
+    }
+
+    function calcBackspace() {
+      calcDisplay = calcDisplay.slice(0, -1) || '0';
+      document.getElementById('calcDisplay').textContent = calcDisplay;
+    }
+
+    // Initialize
+    initTheme();
+    loadHistory();
+
+    function loadHistory() {
+      const saved = localStorage.getItem('quizHistory');
+      quizHistory = saved ? JSON.parse(saved) : [];
+    }
+  </script>
+</body>
+</html>
