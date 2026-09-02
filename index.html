@@ -12,31 +12,33 @@
     }
 
     :root {
-      --bg: #ffffff;
-      --bg-secondary: #f5f5f5;
-      --text: #1a1a1a;
-      --text-light: #666;
-      --accent: #667eea;
-      --success: #28a745;
-      --border: #e0e0e0;
+      --bg: #f0f9fb;
+      --bg-secondary: #e0f7fa;
+      --text: #00695c;
+      --text-light: #00897b;
+      --accent: #00bcd4;
+      --success: #00acc1;
+      --border: #b2dfdb;
     }
 
     [data-theme="dark"] {
-      --bg: #1a1a1a;
-      --bg-secondary: #2d2d2d;
-      --text: #e0e0e0;
-      --text-light: #aaa;
-      --accent: #7b88dd;
-      --success: #32c754;
-      --border: #404040;
+      --bg: #0d3d42;
+      --bg-secondary: #0f4c51;
+      --text: #80deea;
+      --text-light: #4dd0e1;
+      --accent: #00bcd4;
+      --success: #00acc1;
+      --border: #006064;
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg-secondary);
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2dfdb 50%, #80deea 100%);
+      background-attachment: fixed;
       color: var(--text);
       padding: 0;
       margin: 0;
+      min-height: 100vh;
     }
 
     .header {
@@ -56,6 +58,13 @@
       font-weight: 600;
     }
 
+    .tropical-header {
+      width: 100%;
+      height: 120px;
+      display: block;
+      margin-bottom: 20px;
+    }
+
     .theme-btn {
       background: var(--bg-secondary);
       border: none;
@@ -73,11 +82,16 @@
     }
 
     .today-section {
-      background: var(--bg);
+      background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(224,247,250,0.8) 100%);
       border-radius: 16px;
       padding: 24px 20px;
       text-align: center;
       margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 188, 212, 0.08);
+    }
+
+    [data-theme="dark"] .today-section {
+      background: linear-gradient(135deg, rgba(13, 61, 66, 0.9) 0%, rgba(15, 76, 81, 0.8) 100%);
     }
 
     .today-label {
@@ -127,7 +141,7 @@
     }
 
     .primary-btn {
-      background: linear-gradient(135deg, var(--accent) 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #00bcd4 0%, #00acc1 100%);
       color: white;
       border: none;
       border-radius: 12px;
@@ -138,18 +152,25 @@
       width: 100%;
       transition: all 0.3s;
       margin-top: 12px;
+      box-shadow: 0 4px 12px rgba(0, 188, 212, 0.25);
     }
 
     .primary-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+      box-shadow: 0 8px 20px rgba(0, 188, 212, 0.4);
     }
 
     .progress-card {
-      background: var(--bg);
+      background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(224,247,250,0.7) 100%);
       border-radius: 12px;
       padding: 16px;
       margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 188, 212, 0.08);
+      border-left: 3px solid #00bcd4;
+    }
+
+    [data-theme="dark"] .progress-card {
+      background: linear-gradient(135deg, rgba(13, 61, 66, 0.8) 0%, rgba(15, 76, 81, 0.6) 100%);
     }
 
     .progress-header {
@@ -206,6 +227,7 @@
 
     .collapsible-header:hover {
       background: var(--bg-secondary);
+      box-shadow: 0 2px 8px rgba(0, 188, 212, 0.12);
     }
 
     .collapsible-icon {
@@ -266,7 +288,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 105, 92, 0.4);
       z-index: 100;
       justify-content: center;
       align-items: flex-end;
@@ -296,6 +318,19 @@
       }
     }
 
+    @keyframes wave {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(4px);
+      }
+    }
+
+    .wave-animation {
+      animation: wave 2s ease-in-out infinite;
+    }
+
     .modal-close {
       float: right;
       background: none;
@@ -314,7 +349,7 @@
     }
 
     .flashcard {
-      background: linear-gradient(135deg, var(--accent) 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #00bcd4 0%, #00897b 100%);
       color: white;
       padding: 40px 24px;
       border-radius: 16px;
@@ -381,7 +416,8 @@
     }
 
     .btn-secondary:hover {
-      background: var(--border);
+      background: #b2dfdb;
+      border-color: #00acc1;
     }
 
     .score-display {
@@ -408,13 +444,71 @@
 </head>
 <body>
   <div class="header">
-    <h1>📚 Study</h1>
+    <h1>🏝️ Study Hub</h1>
     <button class="theme-btn" onclick="toggleTheme()">🌙</button>
   </div>
 
+  <!-- TROPICAL HEADER GRAPHIC -->
+  <svg class="tropical-header" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <!-- Sky gradient -->
+    <defs>
+      <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#E0F7FA;stop-opacity:1" />
+      </linearGradient>
+      <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style="stop-color:#00BCD4;stop-opacity:0.3" />
+        <stop offset="100%" style="stop-color:#006064;stop-opacity:0.5" />
+      </linearGradient>
+    </defs>
+    
+    <rect width="400" height="120" fill="url(#skyGrad)"/>
+    
+    <!-- Ocean waves -->
+    <path d="M 0 70 Q 50 60 100 70 T 200 70 T 300 70 T 400 70 L 400 120 L 0 120 Z" fill="url(#oceanGrad)"/>
+    
+    <!-- Wave details -->
+    <path d="M 0 75 Q 30 70 60 75 T 120 75 T 180 75 T 240 75 T 300 75 T 360 75" 
+          stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+    
+    <!-- Sun -->
+    <circle cx="350" cy="20" r="15" fill="#FFD700" opacity="0.9"/>
+    
+    <!-- Palm tree 1 (left) -->
+    <g>
+      <!-- Trunk -->
+      <rect x="20" y="50" width="8" height="25" fill="#8B7355" rx="2"/>
+      <!-- Fronds -->
+      <ellipse cx="24" cy="48" rx="18" ry="12" fill="#228B22" transform="rotate(-25 24 48)"/>
+      <ellipse cx="24" cy="48" rx="18" ry="12" fill="#32CD32" transform="rotate(25 48)"/>
+      <ellipse cx="24" cy="48" rx="18" ry="12" fill="#228B22" transform="rotate(75 24 48)"/>
+      <ellipse cx="24" cy="48" rx="18" ry="12" fill="#32CD32" transform="rotate(-75 24 48)"/>
+    </g>
+    
+    <!-- Palm tree 2 (right) -->
+    <g>
+      <!-- Trunk -->
+      <rect x="360" y="50" width="8" height="25" fill="#8B7355" rx="2"/>
+      <!-- Fronds -->
+      <ellipse cx="364" cy="48" rx="18" ry="12" fill="#228B22" transform="rotate(-25 364 48)"/>
+      <ellipse cx="364" cy="48" rx="18" ry="12" fill="#32CD32" transform="rotate(25 364 48)"/>
+      <ellipse cx="364" cy="48" rx="18" ry="12" fill="#228B22" transform="rotate(75 364 48)"/>
+      <ellipse cx="364" cy="48" rx="18" ry="12" fill="#32CD32" transform="rotate(-75 364 48)"/>
+    </g>
+  </svg>
+
   <div class="container">
+    <!-- SAND BEACH LINE -->
+    <div style="height: 12px; background: linear-gradient(90deg, #F4E4C1 0%, #F5DEB3 50%, #F4E4C1 100%); position: relative; margin-bottom: 20px;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: repeating-linear-gradient(90deg, #FFDAB9 0px, #FFDAB9 4px, transparent 4px, transparent 8px);"></div>
+    </div>
     <!-- TODAY'S FOCUS -->
     <div class="today-section">
+      <div style="display: flex; justify-content: space-between; padding: 0 8px; margin-bottom: 12px; font-size: 20px;">
+        <span>🐚</span>
+        <span>🌴</span>
+        <span>⭐</span>
+      </div>
       <div class="today-label">Today's Focus</div>
       <div class="focus-title" id="focusTitle">Quadratic Equations</div>
       <div class="focus-subtitle" id="focusSubtitle">Math • 35% accuracy</div>
@@ -430,10 +524,50 @@
         </div>
       </div>
 
-      <button class="primary-btn" onclick="openStudyModal()">Start Studying</button>
+      <button class="primary-btn" onclick="openStudyModal()">Start Studying 🏝️</button>
+      <div style="display: flex; justify-content: center; gap: 12px; margin-top: 12px; font-size: 18px;">
+        <span>🐠</span>
+        <span>🐚</span>
+        <span>🐠</span>
+      </div>
     </div>
 
-    <!-- YOUR CLASSES -->
+    <!-- GRADE DASHBOARD -->
+    <div style="background: linear-gradient(135deg, #00bcd4 0%, #00897b 100%); border-radius: 12px; padding: 16px; margin-bottom: 16px; color: white;">
+      <div style="font-size: 13px; font-weight: 600; margin-bottom: 12px;">📊 Your Grades</div>
+      <div id="gradeDashboard" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div style="background: rgba(255,255,255,0.15); padding: 10px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 700;">—</div>
+          <div style="font-size: 11px; opacity: 0.9;">Overall GPA</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.15); padding: 10px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 700;">—</div>
+          <div style="font-size: 11px; opacity: 0.9;">Classes with A</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DUE THIS WEEK -->
+    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 14px; margin-bottom: 16px; border-left: 4px solid #ffa94d;">
+      <div style="font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--text);">⏰ Due This Week</div>
+      <div id="dueThisWeek" style="font-size: 12px; color: var(--text-light);">
+        <div style="text-align: center; padding: 10px;">No assignments due this week 🎉</div>
+      </div>
+    </div>
+
+    <!-- DAILY CHECKLIST -->
+    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
+      <div style="font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--text);">✓ Today's Study Tasks</div>
+      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+        <input type="text" id="taskInput" placeholder="Add a task (e.g., Review bio notes)" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; flex: 1; font-size: 12px; background: var(--bg); color: var(--text); box-sizing: border-box;">
+        <button onclick="addDailyTask()" style="padding: 8px 12px; background: var(--accent); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Add</button>
+      </div>
+      <div id="dailyTasksList" style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="text-align: center; color: var(--text-light); font-size: 11px; padding: 8px;">No tasks yet</div>
+      </div>
+    </div>
+
+    
     <div class="collapsible-section">
       <button class="collapsible-header" onclick="toggleCollapsible(event)">
         📊 Your Classes
@@ -484,11 +618,58 @@
             <button class="tool-btn" onclick="openMathHelp()">📐 Math Help</button>
             <button class="tool-btn" onclick="openDebugger()">🐛 Debugging</button>
             <button class="tool-btn" onclick="openNotes()">📝 Cornell Notes</button>
+            <button class="tool-btn" onclick="openAutoNotes()">🤖 Auto Notes</button>
             <button class="tool-btn" onclick="openConceptMap()">🗺️ Concept Map</button>
             <button class="tool-btn" onclick="openTimer()">⏱️ Timer</button>
             <button class="tool-btn" onclick="openGrammar()">✍️ Grammar</button>
             <button class="tool-btn" onclick="openGenerate()">✨ Generate</button>
+            <button class="tool-btn" onclick="openSubmissions()">📤 Submissions</button>
+            <button class="tool-btn" onclick="openGradeTracker()">📊 Grades</button>
+            <button class="tool-btn" onclick="openWeeklyPlanner()">📅 Planner</button>
+            <button class="tool-btn" onclick="openStudyStats()">📈 Stats</button>
+            <button class="tool-btn" onclick="openFinalPrep()">🎯 Final Prep</button>
+
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASSIGNMENTS -->
+    <div class="collapsible-section">
+      <button class="collapsible-header" onclick="toggleCollapsible(event)">
+        ✓ Your Assignments
+        <span class="collapsible-icon">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="collapsible-body">
+          <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 600; margin-bottom: 10px;">Add Assignment</div>
+            
+            <input type="text" id="assignName" placeholder="Name (e.g., Chapter 5 Quiz)" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+            
+            <input type="text" id="assignClass" placeholder="Class" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+
+            <input type="url" id="assignLink" placeholder="Link to assignment (optional)" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+            
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+              <input type="date" id="assignDue" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; flex: 1; font-size: 12px; background: var(--bg); color: var(--text); box-sizing: border-box;">
+              
+              <select id="assignPriority" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; flex: 1; font-size: 12px; background: var(--bg); color: var(--text); box-sizing: border-box;">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            
+            <button class="primary-btn" onclick="addAssignment()" style="width: 100%;">Add</button>
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <button onclick="setAssignmentSort('date')" id="sortByDateBtn" style="flex: 1; padding: 8px; border: 2px solid var(--accent); border-radius: 6px; background: var(--accent); color: white; font-size: 12px; font-weight: 600; cursor: pointer;">📅 Due Date</button>
+            <button onclick="setAssignmentSort('class')" id="sortByClassBtn" style="flex: 1; padding: 8px; border: 2px solid var(--border); border-radius: 6px; background: transparent; color: var(--text); font-size: 12px; font-weight: 600; cursor: pointer;">📚 By Class</button>
+          </div>
+
+          <div id="assignmentsList"></div>
         </div>
       </div>
     </div>
@@ -518,6 +699,19 @@
         </div>
       </div>
     </div>
+
+    <!-- OCEAN WAVES FOOTER -->
+    <svg class="ocean-footer" viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="margin-top: 30px;">
+      <defs>
+        <linearGradient id="oceanFooter" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#00BCD4;stop-opacity:0.4" />
+          <stop offset="100%" style="stop-color:#006064;stop-opacity:0.6" />
+        </linearGradient>
+      </defs>
+      <path d="M 0 20 Q 50 10 100 20 T 200 20 T 300 20 T 400 20 L 400 60 L 0 60 Z" fill="url(#oceanFooter)"/>
+      <path d="M 0 25 Q 50 15 100 25 T 200 25 T 300 25 T 400 25" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+      <path d="M 0 30 Q 50 22 100 30 T 200 30 T 300 30 T 400 30" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
+    </svg>
 
     <!-- BOTTOM PADDING -->
     <div style="height: 40px;"></div>
@@ -735,6 +929,182 @@
     </div>
   </div>
 
+  <!-- GRADE TRACKER MODAL -->
+  <div class="modal" id="gradeTrackerModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('gradeTrackerModal')">✕</button>
+      <div class="modal-title">📊 Grade Tracker</div>
+
+      <div>
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 10px;">Log Grade</div>
+        
+        <input type="text" id="gradeClass" placeholder="Class name" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+        
+        <input type="text" id="gradeAssignment" placeholder="Assignment name" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+        
+        <select id="gradeScore" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+          <option value="">Select grade</option>
+          <option value="A+">A+ (97-100)</option>
+          <option value="A">A (93-96)</option>
+          <option value="A-">A- (90-92)</option>
+          <option value="B+">B+ (87-89)</option>
+          <option value="B">B (83-86)</option>
+          <option value="B-">B- (80-82)</option>
+          <option value="C+">C+ (77-79)</option>
+          <option value="C">C (73-76)</option>
+        </select>
+        
+        <button class="primary-btn" onclick="addGrade()" style="width: 100%;">Log Grade</button>
+      </div>
+
+      <div style="margin-top: 16px;">
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 8px;">Your Grades by Class</div>
+        <div id="gradesList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEKLY PLANNER MODAL -->
+  <div class="modal" id="weeklyPlannerModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('weeklyPlannerModal')">✕</button>
+      <div class="modal-title">📅 Weekly Study Plan</div>
+
+      <div>
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 10px;">Add Study Goal</div>
+        
+        <select id="planDay" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+          <option value="Saturday">Saturday</option>
+          <option value="Sunday">Sunday</option>
+        </select>
+        
+        <input type="text" id="planGoal" placeholder="What to study (e.g., Quadratic equations)" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+        
+        <input type="text" id="planClass" placeholder="Class" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+        
+        <button class="primary-btn" onclick="addPlanGoal()" style="width: 100%;">Add to Plan</button>
+      </div>
+
+      <div style="margin-top: 16px;">
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 8px;">Your Weekly Plan</div>
+        <div id="planList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STUDY STATS MODAL -->
+  <div class="modal" id="studyStatsModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('studyStatsModal')">✕</button>
+      <div class="modal-title">📈 Study Statistics</div>
+
+      <div id="statsDisplay" style="padding: 12px;">
+        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">Total Study Hours</div>
+          <div style="font-size: 24px; font-weight: 700; color: var(--accent);" id="totalHours">0</div>
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">Topics Studied</div>
+          <div style="font-size: 18px; font-weight: 700; color: var(--accent);" id="topicsCount">0</div>
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">Average Accuracy</div>
+          <div style="font-size: 18px; font-weight: 700; color: var(--success);" id="avgAccuracy">72%</div>
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px;">
+          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">Weakest Subject</div>
+          <div style="font-size: 14px; font-weight: 600; color: var(--text);" id="weakestSubject">Not enough data</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL EXAM PREP MODAL -->
+  <div class="modal" id="finalPrepModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('finalPrepModal')">✕</button>
+      <div class="modal-title">🎯 Final Exam Prep</div>
+
+      <div>
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 10px;">Select Class for Finals Review</div>
+        
+        <select id="finalClass" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+          <option value="">Choose a class...</option>
+        </select>
+        
+        <button class="primary-btn" onclick="generateFinalReview()" style="width: 100%;">Generate Study Guide</button>
+      </div>
+
+      <div style="margin-top: 16px;">
+        <div id="finalReviewContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STUDY MUSIC MODAL -->
+  <div class="modal" id="autoNotesModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('autoNotesModal')">✕</button>
+      <div class="modal-title">🤖 Auto Notes</div>
+
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-light); margin-bottom: 6px;">Paste lecture notes or textbook content</label>
+        <textarea id="autoNotesInput" placeholder="Paste your notes here..." style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 13px; min-height: 150px; background: var(--bg); color: var(--text); margin-bottom: 12px;"></textarea>
+
+        <button class="primary-btn" onclick="generateCornellAuto()">Generate Cornell Format</button>
+      </div>
+
+      <div id="autoNotesResult" style="margin-top: 16px;"></div>
+    </div>
+  </div>
+
+  <!-- SUBMISSIONS TRACKER MODAL -->
+  <div class="modal" id="submissionsModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('submissionsModal')">✕</button>
+      <div class="modal-title">📤 Assignment Submissions</div>
+
+      <div>
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 10px;">Add Completed Assignment</div>
+        
+        <input type="text" id="subName" placeholder="Assignment name" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+        
+        <input type="text" id="subClass" placeholder="Class" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+        
+        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+          <input type="date" id="subDate" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; flex: 1; font-size: 12px; background: var(--bg); color: var(--text); box-sizing: border-box;">
+          
+          <select id="subGrade" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; flex: 1; font-size: 12px; background: var(--bg); color: var(--text); box-sizing: border-box;">
+            <option value="">Grade (optional)</option>
+            <option value="A">A</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B">B</option>
+            <option value="B-">B-</option>
+            <option value="C">C</option>
+          </select>
+        </div>
+
+        <textarea id="subNotes" placeholder="Notes (optional)" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; min-height: 60px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;"></textarea>
+        
+        <button class="primary-btn" onclick="addSubmission()" style="width: 100%;">Add Submission</button>
+      </div>
+
+      <div style="margin-top: 16px;">
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 8px;">Your Submissions by Class</div>
+        <div id="submissionsList"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- GENERATE MODAL -->
   <div class="modal" id="generateModal">
     <div class="modal-content">
@@ -855,7 +1225,17 @@
     }
 
     function openDebugger() {
-      document.getElementById('debugModal').classList.add('open');
+      try {
+        const modal = document.getElementById('debugModal');
+        if (modal) {
+          modal.classList.add('open');
+        } else {
+          alert('❌ Debug modal not found. Try refreshing the page.');
+        }
+      } catch (e) {
+        console.error('Error opening debugger:', e);
+        alert('❌ Error opening debugger: ' + e.message);
+      }
     }
 
     function openNotes() {
@@ -876,6 +1256,35 @@
 
     function openGenerate() {
       document.getElementById('generateModal').classList.add('open');
+    }
+
+    function openAutoNotes() {
+      document.getElementById('autoNotesModal').classList.add('open');
+    }
+
+    function openSubmissions() {
+      document.getElementById('submissionsModal').classList.add('open');
+      renderSubmissions();
+    }
+
+    function openGradeTracker() {
+      document.getElementById('gradeTrackerModal').classList.add('open');
+      renderGrades();
+    }
+
+    function openWeeklyPlanner() {
+      document.getElementById('weeklyPlannerModal').classList.add('open');
+      renderPlan();
+    }
+
+    function openStudyStats() {
+      document.getElementById('studyStatsModal').classList.add('open');
+      updateStats();
+    }
+
+    function openFinalPrep() {
+      document.getElementById('finalPrepModal').classList.add('open');
+      populateFinalClasses();
     }
 
     let timerSeconds = 25 * 60;
@@ -983,6 +1392,126 @@
       document.getElementById('cueColumn').value = '';
       document.getElementById('notesColumn').value = '';
       document.getElementById('summaryColumn').value = '';
+    }
+
+    function generateCornellAuto() {
+      const text = document.getElementById('autoNotesInput').value.trim();
+      if (!text) {
+        alert('Paste notes first');
+        return;
+      }
+
+      // Extract sentences and create questions
+      const sentences = text.match(/[^.!?]+[.!?]+/g) || text.split('\n').filter(s => s.trim());
+      const questions = sentences.slice(0, 5).map((sent, i) => {
+        const cleaned = sent.trim().replace(/[.!?]+$/, '');
+        return `Q${i+1}: What is ${cleaned.toLowerCase().split(' ')[0]} about?`;
+      }).join('\n');
+
+      // Create summary from first 2 sentences
+      const summary = sentences.slice(0, 2).map(s => s.trim()).join(' ').substring(0, 150) + '...';
+
+      const result = `
+        <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px; margin-bottom: 12px;">
+          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 8px; font-weight: 600;">📝 Left Column (Cues):</div>
+          <div style="background: var(--bg); padding: 10px; border-radius: 4px; font-size: 12px; font-family: monospace; white-space: pre-wrap; margin-bottom: 12px; color: var(--text);">${questions}</div>
+          
+          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 8px; font-weight: 600;">📖 Right Column (Notes):</div>
+          <div style="background: var(--bg); padding: 10px; border-radius: 4px; font-size: 12px; font-family: monospace; white-space: pre-wrap; margin-bottom: 12px; color: var(--text);">${text.substring(0, 300)}...</div>
+          
+          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 8px; font-weight: 600;">📌 Bottom (Summary):</div>
+          <div style="background: var(--bg); padding: 10px; border-radius: 4px; font-size: 12px; font-family: monospace; color: var(--text);">${summary}</div>
+        </div>
+        <p style="font-size: 11px; color: var(--text-light); line-height: 1.6;">✅ Copy these into Cornell Notes tool above! Left = cues, Right = full notes, Bottom = summary.</p>
+      `;
+
+      document.getElementById('autoNotesResult').innerHTML = result;
+      document.getElementById('autoNotesInput').value = '';
+    }
+
+    function addSubmission() {
+      const name = document.getElementById('subName').value.trim();
+      const classname = document.getElementById('subClass').value.trim();
+      const date = document.getElementById('subDate').value;
+      const grade = document.getElementById('subGrade').value;
+      const notes = document.getElementById('subNotes').value.trim();
+
+      if (!name || !classname || !date) {
+        alert('Fill in assignment name, class, and date');
+        return;
+      }
+
+      const submission = {
+        id: Date.now(),
+        name,
+        classname,
+        date,
+        grade,
+        notes,
+        dateAdded: new Date().toISOString()
+      };
+
+      let submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+      submissions.push(submission);
+      localStorage.setItem('submissions', JSON.stringify(submissions));
+
+      document.getElementById('subName').value = '';
+      document.getElementById('subClass').value = '';
+      document.getElementById('subDate').value = '';
+      document.getElementById('subGrade').value = '';
+      document.getElementById('subNotes').value = '';
+
+      renderSubmissions();
+    }
+
+    function renderSubmissions() {
+      let submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+      
+      if (submissions.length === 0) {
+        document.getElementById('submissionsList').innerHTML = '<div style="font-size: 12px; color: var(--text-light); text-align: center; padding: 20px;">No submissions yet</div>';
+        return;
+      }
+
+      // Group by class
+      const byClass = {};
+      submissions.forEach(s => {
+        if (!byClass[s.classname]) byClass[s.classname] = [];
+        byClass[s.classname].push(s);
+      });
+
+      let html = '';
+      Object.keys(byClass).forEach(className => {
+        html += `<div style="margin-bottom: 16px;">
+          <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 8px;">${className}</div>`;
+        
+        byClass[className].forEach(sub => {
+          const subDate = new Date(sub.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          html += `
+            <div style="background: var(--bg-secondary); padding: 10px; border-radius: 6px; margin-bottom: 6px; border-left: 3px solid #00bcd4;">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
+                <div style="font-size: 11px; font-weight: 600;">${sub.name}</div>
+                <div style="font-size: 10px; color: var(--text-light);">${subDate}</div>
+              </div>
+              ${sub.grade ? `<div style="font-size: 11px; color: var(--success); margin-bottom: 4px;">Grade: <strong>${sub.grade}</strong></div>` : ''}
+              ${sub.notes ? `<div style="font-size: 10px; color: var(--text-light);">${sub.notes}</div>` : ''}
+              <button onclick="deleteSubmission(${sub.id})" style="font-size: 10px; padding: 4px 8px; background: var(--bg); border: 0.5px solid var(--border); border-radius: 3px; color: var(--text); cursor: pointer;">Delete</button>
+            </div>
+          `;
+        });
+
+        html += `</div>`;
+      });
+
+      document.getElementById('submissionsList').innerHTML = html;
+    }
+
+    function deleteSubmission(id) {
+      if (confirm('Delete this submission?')) {
+        let submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+        submissions = submissions.filter(s => s.id !== id);
+        localStorage.setItem('submissions', JSON.stringify(submissions));
+        renderSubmissions();
+      }
     }
 
     function checkGrammar() {
@@ -1127,9 +1656,642 @@
       document.getElementById('errorSolution').innerHTML = solution;
     }
 
+    // Assignment Tracker
+    function addAssignment() {
+      const name = document.getElementById('assignName').value.trim();
+      const classname = document.getElementById('assignClass').value.trim();
+      const dueDate = document.getElementById('assignDue').value;
+      const priority = document.getElementById('assignPriority').value;
+      const link = document.getElementById('assignLink').value.trim();
+
+      if (!name || !classname || !dueDate) {
+        alert('Fill in: Name, Class, Due Date');
+        return;
+      }
+
+      const assignment = {
+        id: Date.now(),
+        name,
+        classname,
+        dueDate,
+        priority,
+        link: link || null,
+        status: 'to-do',
+        dateAdded: new Date().toISOString()
+      };
+
+      let assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+      assignments.push(assignment);
+      localStorage.setItem('assignments', JSON.stringify(assignments));
+
+      document.getElementById('assignName').value = '';
+      document.getElementById('assignClass').value = '';
+      document.getElementById('assignDue').value = '';
+      document.getElementById('assignPriority').value = 'medium';
+      document.getElementById('assignLink').value = '';
+
+      renderAssignments();
+      updateDueThisWeek();
+    }
+
+    let assignmentSortMode = 'date'; // 'date' or 'class'
+
+    function setAssignmentSort(mode) {
+      assignmentSortMode = mode;
+      
+      // Update button styles
+      const dateBtn = document.getElementById('sortByDateBtn');
+      const classBtn = document.getElementById('sortByClassBtn');
+      
+      if (mode === 'date') {
+        dateBtn.style.background = 'var(--accent)';
+        dateBtn.style.borderColor = 'var(--accent)';
+        dateBtn.style.color = 'white';
+        
+        classBtn.style.background = 'transparent';
+        classBtn.style.borderColor = 'var(--border)';
+        classBtn.style.color = 'var(--text)';
+      } else {
+        dateBtn.style.background = 'transparent';
+        dateBtn.style.borderColor = 'var(--border)';
+        dateBtn.style.color = 'var(--text)';
+        
+        classBtn.style.background = 'var(--accent)';
+        classBtn.style.borderColor = 'var(--accent)';
+        classBtn.style.color = 'white';
+      }
+      
+      renderAssignments();
+    }
+
+    function renderAssignments() {
+      let assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+      
+      if (assignments.length === 0) {
+        document.getElementById('assignmentsList').innerHTML = '<div style="font-size: 12px; color: var(--text-light); text-align: center; padding: 20px;">No assignments yet</div>';
+        return;
+      }
+
+      let listHtml = '';
+
+      if (assignmentSortMode === 'date') {
+        // SORT BY DUE DATE
+        assignments.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+        
+        listHtml = assignments.map(a => {
+          const dueDate = new Date(a.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          const priorityColor = a.priority === 'high' ? '#ff6b6b' : a.priority === 'medium' ? '#ffa94d' : '#51cf66';
+          const statusColor = a.status === 'done' ? '#28a745' : a.status === 'in-progress' ? '#667eea' : '#666';
+
+          return `
+            <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid ${priorityColor};">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 6px;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 600; color: var(--text);">${a.name}</div>
+                  <div style="font-size: 11px; color: var(--text-light);">${a.classname}</div>
+                </div>
+                <div style="font-size: 10px; color: var(--text-light); background: var(--bg); padding: 4px 8px; border-radius: 4px;">Due: ${dueDate}</div>
+              </div>
+              
+              <div style="display: flex; gap: 6px;">
+                <select onchange="updateAssignmentStatus(${a.id}, this.value)" style="padding: 4px 6px; font-size: 11px; border: 0.5px solid var(--border); border-radius: 4px; background: var(--bg); color: ${statusColor}; font-weight: 600;">
+                  <option value="to-do" ${a.status === 'to-do' ? 'selected' : ''}>📋 To-Do</option>
+                  <option value="in-progress" ${a.status === 'in-progress' ? 'selected' : ''}>⏳ In Progress</option>
+                  <option value="done" ${a.status === 'done' ? 'selected' : ''}>✅ Done</option>
+                </select>
+                
+                ${a.link ? `<a href="${a.link}" target="_blank" style="padding: 4px 8px; font-size: 11px; border: 0.5px solid var(--border); border-radius: 4px; background: var(--accent); color: white; cursor: pointer; text-decoration: none; display: inline-block;">🔗 Link</a>` : ''}
+                
+                <button onclick="deleteAssignment(${a.id})" style="padding: 4px 8px; font-size: 11px; border: 0.5px solid var(--border); border-radius: 4px; background: var(--bg); color: var(--text); cursor: pointer;">Delete</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        // SORT BY CLASS
+        const byClass = {};
+        assignments.forEach(a => {
+          if (!byClass[a.classname]) byClass[a.classname] = [];
+          byClass[a.classname].push(a);
+        });
+
+        // Sort each class by due date
+        Object.keys(byClass).forEach(cls => {
+          byClass[cls].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+        });
+
+        // Sort classes alphabetically
+        const sortedClasses = Object.keys(byClass).sort();
+
+        listHtml = sortedClasses.map(className => {
+          const classAssignments = byClass[className];
+          const classHtml = classAssignments.map(a => {
+            const dueDate = new Date(a.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            const priorityColor = a.priority === 'high' ? '#ff6b6b' : a.priority === 'medium' ? '#ffa94d' : '#51cf66';
+            const statusColor = a.status === 'done' ? '#28a745' : a.status === 'in-progress' ? '#667eea' : '#666';
+
+            return `
+              <div style="background: var(--bg); padding: 10px; border-radius: 6px; margin-bottom: 6px; border-left: 3px solid ${priorityColor};">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
+                  <div>
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text);">${a.name}</div>
+                  </div>
+                  <div style="font-size: 9px; color: var(--text-light);">Due: ${dueDate}</div>
+                </div>
+                
+                <div style="display: flex; gap: 4px;">
+                  <select onchange="updateAssignmentStatus(${a.id}, this.value)" style="padding: 2px 4px; font-size: 10px; border: 0.5px solid var(--border); border-radius: 4px; background: var(--bg-secondary); color: ${statusColor}; font-weight: 600;">
+                    <option value="to-do" ${a.status === 'to-do' ? 'selected' : ''}>📋 To-Do</option>
+                    <option value="in-progress" ${a.status === 'in-progress' ? 'selected' : ''}>⏳ In Progress</option>
+                    <option value="done" ${a.status === 'done' ? 'selected' : ''}>✅ Done</option>
+                  </select>
+                  
+                  ${a.link ? `<a href="${a.link}" target="_blank" style="padding: 2px 6px; font-size: 10px; border: 0.5px solid var(--border); border-radius: 4px; background: var(--accent); color: white; cursor: pointer; text-decoration: none; display: inline-block;">🔗</a>` : ''}
+                  
+                  <button onclick="deleteAssignment(${a.id})" style="padding: 2px 6px; font-size: 10px; border: 0.5px solid var(--border); border-radius: 4px; background: var(--bg-secondary); color: var(--text); cursor: pointer;">✕</button>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <div style="margin-bottom: 12px;">
+              <div style="font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 8px;">📚 ${className}</div>
+              <div style="background: var(--bg-secondary); padding: 8px; border-radius: 8px;">
+                ${classHtml}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      document.getElementById('assignmentsList').innerHTML = listHtml;
+    }
+
+    function updateAssignmentStatus(id, newStatus) {
+      let assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+      assignments = assignments.map(a => a.id === id ? { ...a, status: newStatus } : a);
+      localStorage.setItem('assignments', JSON.stringify(assignments));
+      renderAssignments();
+    }
+
+    function deleteAssignment(id) {
+      if (confirm('Delete this assignment?')) {
+        let assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+        assignments = assignments.filter(a => a.id !== id);
+        localStorage.setItem('assignments', JSON.stringify(assignments));
+        renderAssignments();
+      }
+    }
+
+    // GRADE TRACKER
+    function addGrade() {
+      const classname = document.getElementById('gradeClass').value.trim();
+      const assignment = document.getElementById('gradeAssignment').value.trim();
+      const score = document.getElementById('gradeScore').value;
+
+      if (!classname || !assignment || !score) {
+        alert('Fill in all fields');
+        return;
+      }
+
+      const grade = {
+        id: Date.now(),
+        classname,
+        assignment,
+        score,
+        date: new Date().toISOString()
+      };
+
+      let grades = JSON.parse(localStorage.getItem('grades') || '[]');
+      grades.push(grade);
+      localStorage.setItem('grades', JSON.stringify(grades));
+
+      document.getElementById('gradeClass').value = '';
+      document.getElementById('gradeAssignment').value = '';
+      document.getElementById('gradeScore').value = '';
+
+      renderGrades();
+      updateGradeDashboard();
+    }
+
+    function renderGrades() {
+      let grades = JSON.parse(localStorage.getItem('grades') || '[]');
+      
+      if (grades.length === 0) {
+        document.getElementById('gradesList').innerHTML = '<div style="font-size: 12px; color: var(--text-light); text-align: center; padding: 20px;">No grades logged yet</div>';
+        return;
+      }
+
+      const byClass = {};
+      grades.forEach(g => {
+        if (!byClass[g.classname]) byClass[g.classname] = [];
+        byClass[g.classname].push(g);
+      });
+
+      let html = '';
+      Object.keys(byClass).forEach(className => {
+        const classGrades = byClass[className];
+        const gradeValues = classGrades.map(g => g.score.replace(/[^0-9]/g, '') || 0).map(Number);
+        const avg = Math.round(gradeValues.reduce((a,b) => a+b, 0) / gradeValues.length);
+        const letterGrade = avg >= 90 ? 'A' : avg >= 80 ? 'B' : avg >= 70 ? 'C' : 'D';
+
+        html += `<div style="margin-bottom: 12px;">
+          <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 6px;">${className} • ${letterGrade} (${avg}%)</div>`;
+        
+        classGrades.forEach(g => {
+          html += `<div style="background: var(--bg-secondary); padding: 8px; border-radius: 6px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <span>${g.assignment}</span>
+            <span style="color: var(--success); font-weight: 600;">${g.score}</span>
+          </div>`;
+        });
+
+        html += `</div>`;
+      });
+
+      document.getElementById('gradesList').innerHTML = html;
+    }
+
+    // WEEKLY PLANNER
+    function addPlanGoal() {
+      const day = document.getElementById('planDay').value;
+      const goal = document.getElementById('planGoal').value.trim();
+      const classname = document.getElementById('planClass').value.trim();
+
+      if (!goal || !classname) {
+        alert('Fill in goal and class');
+        return;
+      }
+
+      const plan = {
+        id: Date.now(),
+        day,
+        goal,
+        classname,
+        completed: false
+      };
+
+      let plans = JSON.parse(localStorage.getItem('weeklyPlan') || '[]');
+      plans.push(plan);
+      localStorage.setItem('weeklyPlan', JSON.stringify(plans));
+
+      document.getElementById('planGoal').value = '';
+      document.getElementById('planClass').value = '';
+
+      renderPlan();
+    }
+
+    function renderPlan() {
+      let plans = JSON.parse(localStorage.getItem('weeklyPlan') || '[]');
+      
+      if (plans.length === 0) {
+        document.getElementById('planList').innerHTML = '<div style="font-size: 12px; color: var(--text-light); text-align: center; padding: 20px;">No goals planned yet</div>';
+        return;
+      }
+
+      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      let html = '';
+
+      days.forEach(day => {
+        const dayPlans = plans.filter(p => p.day === day);
+        if (dayPlans.length === 0) return;
+
+        html += `<div style="margin-bottom: 12px;">
+          <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 6px;">${day}</div>`;
+
+        dayPlans.forEach(p => {
+          html += `<div style="background: var(--bg-secondary); padding: 10px; border-radius: 6px; margin-bottom: 4px; border-left: 3px solid #00bcd4;">
+            <div style="font-size: 11px; font-weight: 600; margin-bottom: 2px;">${p.goal}</div>
+            <div style="font-size: 10px; color: var(--text-light);">${p.classname}</div>
+            <button onclick="deletePlan(${p.id})" style="font-size: 10px; padding: 3px 6px; background: var(--bg); border: 0.5px solid var(--border); border-radius: 3px; color: var(--text); cursor: pointer; margin-top: 4px;">Delete</button>
+          </div>`;
+        });
+
+        html += `</div>`;
+      });
+
+      document.getElementById('planList').innerHTML = html;
+    }
+
+    function deletePlan(id) {
+      let plans = JSON.parse(localStorage.getItem('weeklyPlan') || '[]');
+      plans = plans.filter(p => p.id !== id);
+      localStorage.setItem('weeklyPlan', JSON.stringify(plans));
+      renderPlan();
+    }
+
+    // STUDY STATS
+    function updateStats() {
+      let assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+      let grades = JSON.parse(localStorage.getItem('grades') || '[]');
+      
+      // Calculate total study hours (rough estimate: assignments as proxy)
+      const totalHours = assignments.length * 2; // estimate 2 hours per assignment
+      document.getElementById('totalHours').textContent = totalHours;
+
+      // Count unique classes (topics)
+      const classes = new Set(assignments.map(a => a.classname));
+      document.getElementById('topicsCount').textContent = classes.size;
+
+      // Average grade
+      if (grades.length > 0) {
+        const scores = grades.map(g => {
+          const scoreStr = g.score.replace(/[^0-9]/g, '');
+          return scoreStr ? parseInt(scoreStr) : 80;
+        });
+        const avg = Math.round(scores.reduce((a,b) => a+b, 0) / scores.length);
+        document.getElementById('avgAccuracy').textContent = avg + '%';
+      }
+
+      // Weakest subject
+      const byClass = {};
+      grades.forEach(g => {
+        if (!byClass[g.classname]) byClass[g.classname] = [];
+        const score = parseInt(g.score.replace(/[^0-9]/g, '')) || 80;
+        byClass[g.classname].push(score);
+      });
+
+      if (Object.keys(byClass).length > 0) {
+        let weakest = '';
+        let lowestAvg = 100;
+        Object.keys(byClass).forEach(cls => {
+          const avg = Math.round(byClass[cls].reduce((a,b) => a+b, 0) / byClass[cls].length);
+          if (avg < lowestAvg) {
+            lowestAvg = avg;
+            weakest = cls;
+          }
+        });
+        document.getElementById('weakestSubject').textContent = weakest + ` (${lowestAvg}%)`;
+      }
+    }
+
+    // FINAL EXAM PREP
+    function populateFinalClasses() {
+      let assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+      const classes = [...new Set(assignments.map(a => a.classname))];
+      
+      let options = '<option value="">Choose a class...</option>';
+      classes.forEach(cls => {
+        options += `<option value="${cls}">${cls}</option>`;
+      });
+
+      document.getElementById('finalClass').innerHTML = options;
+    }
+
+    function generateFinalReview() {
+      const classname = document.getElementById('finalClass').value;
+      if (!classname) {
+        alert('Select a class');
+        return;
+      }
+
+      let assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+      let grades = JSON.parse(localStorage.getItem('grades') || '[]');
+      let submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+
+      const classAssignments = assignments.filter(a => a.classname === classname);
+      const classGrades = grades.filter(g => g.classname === classname);
+      const classSubmissions = submissions.filter(s => s.classname === classname);
+
+      // Find low grades (B- or lower)
+      const lowGrades = classGrades.filter(g => {
+        const score = parseInt(g.score.replace(/[^0-9]/g, '')) || 80;
+        return score < 83;
+      });
+
+      const html = `
+        <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px;">
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--accent);">📚 ${classname} - Final Exam Study Guide</div>
+
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">📊 Class Overview</div>
+            <div style="font-size: 11px; color: var(--text-light); line-height: 1.6;">
+              • ${classAssignments.length} assignments covered<br>
+              • ${classSubmissions.length} assignments submitted<br>
+              • ${classGrades.length} grades logged
+            </div>
+          </div>
+
+          ${lowGrades.length > 0 ? `
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px; color: #ff6b6b;">⚠️ Focus These Topics (B- or lower)</div>
+            <div style="font-size: 11px; color: var(--text-light); line-height: 1.8;">
+              ${lowGrades.map(g => `• ${g.assignment} (${g.score})`).join('<br>')}
+            </div>
+          </div>
+          ` : ''}
+
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">✅ All Topics Covered</div>
+            <div style="font-size: 11px; color: var(--text-light); line-height: 1.8;">
+              ${classAssignments.length > 0 ? classAssignments.map(a => `• ${a.name}`).join('<br>') : 'No assignments tracked'}
+            </div>
+          </div>
+
+          <div style="background: var(--bg); padding: 12px; border-radius: 6px; border-left: 3px solid #00acc1;">
+            <div style="font-size: 11px; font-weight: 600; margin-bottom: 6px;">📝 Study Strategy</div>
+            <div style="font-size: 10px; color: var(--text-light); line-height: 1.6;">
+              1. Review all low-scoring assignments<br>
+              2. Create flashcards for weak topics<br>
+              3. Use Concept Map to see connections<br>
+              4. Practice with old assignments<br>
+              5. Take practice tests
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('finalReviewContent').innerHTML = html;
+    }
+
+    // GRADE DASHBOARD
+    function updateGradeDashboard() {
+      let grades = JSON.parse(localStorage.getItem('grades') || '[]');
+      
+      if (grades.length === 0) {
+        document.getElementById('gradeDashboard').innerHTML = `
+          <div style="background: rgba(255,255,255,0.15); padding: 10px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 18px;">—</div>
+            <div style="font-size: 11px; opacity: 0.9;">Log grades to see stats</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.15); padding: 10px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 18px;">0</div>
+            <div style="font-size: 11px; opacity: 0.9;">Classes</div>
+          </div>
+        `;
+        return;
+      }
+
+      // Get unique classes
+      const classes = [...new Set(grades.map(g => g.classname))];
+      
+      // Calculate overall GPA
+      let totalPoints = 0;
+      let totalCount = 0;
+      classes.forEach(cls => {
+        const classGrades = grades.filter(g => g.classname === cls);
+        const avg = classGrades.reduce((sum, g) => {
+          const score = parseInt(g.score.replace(/[^0-9]/g, '')) || 80;
+          return sum + score;
+        }, 0) / classGrades.length;
+        totalPoints += avg;
+        totalCount++;
+      });
+      
+      const overallGPA = totalCount > 0 ? (totalPoints / totalCount).toFixed(1) : '—';
+      
+      // Count classes with A (90+)
+      const aClasses = classes.filter(cls => {
+        const classGrades = grades.filter(g => g.classname === cls);
+        const avg = classGrades.reduce((sum, g) => {
+          const score = parseInt(g.score.replace(/[^0-9]/g, '')) || 80;
+          return sum + score;
+        }, 0) / classGrades.length;
+        return avg >= 90;
+      }).length;
+
+      document.getElementById('gradeDashboard').innerHTML = `
+        <div style="background: rgba(255,255,255,0.15); padding: 10px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 700;">${overallGPA}</div>
+          <div style="font-size: 11px; opacity: 0.9;">Overall Average</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.15); padding: 10px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 700;">${aClasses}/${classes.length}</div>
+          <div style="font-size: 11px; opacity: 0.9;">Classes with A</div>
+        </div>
+      `;
+    }
+
+    // DUE THIS WEEK
+    function updateDueThisWeek() {
+      let assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+      
+      const today = new Date();
+      const weekFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+      
+      const dueThisWeek = assignments.filter(a => {
+        const dueDate = new Date(a.dueDate);
+        return dueDate >= today && dueDate <= weekFromNow && a.status !== 'done';
+      }).sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+
+      if (dueThisWeek.length === 0) {
+        document.getElementById('dueThisWeek').innerHTML = `<div style="text-align: center; padding: 10px; color: var(--text-light);">No assignments due this week 🎉</div>`;
+        return;
+      }
+
+      const html = dueThisWeek.map(a => {
+        const dueDate = new Date(a.dueDate);
+        const daysLeft = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+        const urgency = daysLeft <= 1 ? '🔴' : daysLeft <= 3 ? '🟡' : '🟢';
+        const shortDate = dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        
+        return `
+          <div style="background: var(--bg); padding: 10px; border-radius: 6px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 12px; font-weight: 500; color: var(--text);">${a.name}</div>
+              <div style="font-size: 10px; color: var(--text-light);">${a.classname}</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 11px; font-weight: 600;">${urgency} ${daysLeft} day${daysLeft === 1 ? '' : 's'}</div>
+              <div style="font-size: 10px; color: var(--text-light);">${shortDate}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('dueThisWeek').innerHTML = html;
+    }
+
+    // DAILY CHECKLIST
+    function addDailyTask() {
+      const input = document.getElementById('taskInput');
+      const task = input.value.trim();
+
+      if (!task) {
+        alert('Enter a task!');
+        return;
+      }
+
+      let tasks = JSON.parse(localStorage.getItem('dailyTasks') || '[]');
+      tasks.push({
+        id: Date.now(),
+        text: task,
+        done: false,
+        date: new Date().toDateString()
+      });
+
+      localStorage.setItem('dailyTasks', JSON.stringify(tasks));
+      input.value = '';
+      renderDailyTasks();
+    }
+
+    function renderDailyTasks() {
+      let tasks = JSON.parse(localStorage.getItem('dailyTasks') || '[]');
+      
+      // Only show today's tasks
+      const today = new Date().toDateString();
+      tasks = tasks.filter(t => t.date === today);
+
+      if (tasks.length === 0) {
+        document.getElementById('dailyTasksList').innerHTML = `
+          <div style="text-align: center; color: var(--text-light); font-size: 11px; padding: 8px;">No tasks yet</div>
+        `;
+        return;
+      }
+
+      const html = tasks.map(t => `
+        <div style="display: flex; align-items: center; gap: 10px; background: var(--bg); padding: 10px; border-radius: 6px;">
+          <input type="checkbox" onchange="toggleDailyTask(${t.id})" ${t.done ? 'checked' : ''} style="width: 16px; height: 16px; cursor: pointer;">
+          <div style="flex: 1; font-size: 12px; color: var(--text); ${t.done ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${t.text}</div>
+          <button onclick="deleteDailyTask(${t.id})" style="padding: 4px 8px; font-size: 11px; border: 0.5px solid var(--border); border-radius: 4px; background: var(--bg-secondary); color: var(--text); cursor: pointer;">Delete</button>
+        </div>
+      `).join('');
+
+      document.getElementById('dailyTasksList').innerHTML = html;
+    }
+
+    function toggleDailyTask(id) {
+      let tasks = JSON.parse(localStorage.getItem('dailyTasks') || '[]');
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        task.done = !task.done;
+        localStorage.setItem('dailyTasks', JSON.stringify(tasks));
+        renderDailyTasks();
+      }
+    }
+
+    function deleteDailyTask(id) {
+      let tasks = JSON.parse(localStorage.getItem('dailyTasks') || '[]');
+      tasks = tasks.filter(t => t.id !== id);
+      localStorage.setItem('dailyTasks', JSON.stringify(tasks));
+      renderDailyTasks();
+    }
+
+
     const saved = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', saved);
     updateTimerDisplay();
+    
+    // Initialize button styles for assignment sort
+    const dateBtn = document.getElementById('sortByDateBtn');
+    const classBtn = document.getElementById('sortByClassBtn');
+    if (dateBtn) {
+      dateBtn.style.background = 'var(--accent)';
+      dateBtn.style.borderColor = 'var(--accent)';
+      dateBtn.style.color = 'white';
+    }
+    if (classBtn) {
+      classBtn.style.background = 'transparent';
+      classBtn.style.borderColor = 'var(--border)';
+      classBtn.style.color = 'var(--text)';
+    }
+    
+    renderAssignments();
+    renderGrades();
+    renderPlan();
+    updateGradeDashboard();
+    updateDueThisWeek();
+    renderDailyTasks();
   </script>
 </body>
 </html>
