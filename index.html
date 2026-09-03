@@ -639,6 +639,14 @@
             <button class="tool-btn" onclick="openStudyStats()">📈 Stats</button>
             <button class="tool-btn" onclick="openFinalPrep()">🎯 Final Prep</button>
 
+            <button class="tool-btn" onclick="openDiagramLabeler()">🔬 Diagram Labeler</button>
+
+            <button class="tool-btn" onclick="openVocabDrills()">📚 Vocab Drills</button>
+
+            <button class="tool-btn" onclick="openScratchPad()">✏️ Scratch Pad</button>
+
+            <button class="tool-btn" onclick="openDesmos()">📊 Desmos Calc</button>
+
           </div>
         </div>
       </div>
@@ -874,67 +882,27 @@
   <div class="modal" id="grammarModal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal('grammarModal')">✕</button>
-      <div class="modal-title">✍️ Grammar Check</div>
+      <div class="modal-title">✍️ Grammar Check (AI-Powered)</div>
 
-      <div>
-        <label style="display: block; font-size: 12px; color: var(--text-light); margin-bottom: 6px;">Paste your sentence</label>
-        <textarea id="grammarInput" placeholder="e.g., I went to the store, I bought milk." style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-size: 13px; min-height: 80px; background: var(--bg); color: var(--text); margin-bottom: 12px;"></textarea>
-
-        <button class="primary-btn" onclick="checkGrammar()">Check Sentence</button>
+      <div style="margin-bottom: 16px; padding: 12px; background: #667eea; border-radius: 6px; color: white; font-size: 11px;">
+        <strong>⚙️ First Time Setup:</strong><br>
+        Get free API key at <strong>https://console.anthropic.com/</strong> → paste below
       </div>
 
-      <div id="grammarResult" style="margin-top: 16px;"></div>
+      <div style="margin-bottom: 16px;">
+        <input type="password" id="apiKeyInput" placeholder="Paste your Anthropic API key..." style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 11px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+        <button onclick="saveApiKey()" style="width: 100%; padding: 8px; background: #51cf66; color: white; border: none; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;">✅ Save API Key</button>
+      </div>
 
-      <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
-        <div style="font-size: 12px; font-weight: 600; margin-bottom: 12px;">Top Grammar Rules</div>
-        
-        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
-          <strong>1. Comma Splice:</strong> Two sentences with just a comma<br>
-          ❌ "I went to the store, I bought milk."<br>
-          ✓ "I went to the store, and I bought milk."
-        </div>
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 12px; color: var(--text-light); margin-bottom: 6px;">Your Writing</label>
+        <textarea id="grammarInput" placeholder="Paste your essay, paragraph, or sentence..." style="padding: 10px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); min-height: 100px; margin-bottom: 12px; box-sizing: border-box;"></textarea>
 
-        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
-          <strong>2. Apostrophe for Possession:</strong> Use for ownership, not plurals<br>
-          ❌ "the dog's run fast" (plural)<br>
-          ✓ "the dog's collar" (possession), "the dogs run fast" (plural)
-        </div>
+        <button class="primary-btn" onclick="checkGrammar()" style="width: 100%;">🚀 Check Grammar (AI)</button>
+      </div>
 
-        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
-          <strong>3. its vs it's:</strong> Easy mix-up<br>
-          ✓ "it's raining" = it is raining<br>
-          ✓ "the dog lost its collar" = possession
-        </div>
-
-        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
-          <strong>4. Your vs You're:</strong><br>
-          ✓ "you're going" = you are going<br>
-          ✓ "your book" = possession
-        </div>
-
-        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
-          <strong>5. Capital I:</strong> Always capitalize when talking about yourself<br>
-          ❌ "i went to school"<br>
-          ✓ "I went to school"
-        </div>
-
-        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
-          <strong>6. Run-on Sentence:</strong> Too many ideas, too many "and"s<br>
-          ❌ "I studied hard and I took the test and I got an A."<br>
-          ✓ "I studied hard. Then I took the test and got an A."
-        </div>
-
-        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.6;">
-          <strong>7. Fragment:</strong> Missing subject or verb<br>
-          ❌ "Because I studied hard." (missing main idea)<br>
-          ✓ "I did well because I studied hard."
-        </div>
-
-        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; font-size: 11px; line-height: 1.6;">
-          <strong>8. End Punctuation:</strong> Every sentence needs it<br>
-          ❌ "I studied all day"<br>
-          ✓ "I studied all day."
-        </div>
+      <div id="grammarResult" style="background: var(--bg-secondary); padding: 12px; border-radius: 6px; min-height: 80px; font-size: 11px; max-height: 300px; overflow-y: auto; line-height: 1.6;">
+        <div style="color: var(--text-light); text-align: center;">Results will appear here</div>
       </div>
     </div>
   </div>
@@ -1133,6 +1101,105 @@
     </div>
   </div>
   </div> <!-- End mainApp -->
+
+  <!-- DIAGRAM LABELER MODAL -->
+  <div class="modal" id="diagramModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('diagramModal')">✕</button>
+      <div class="modal-title">🔬 Diagram Labeler</div>
+
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 8px;">Upload or Paste Diagram (URL)</div>
+        <input type="text" id="diagramUrl" placeholder="Paste image URL..." style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+        <button onclick="loadDiagram()" style="padding: 8px 12px; background: var(--accent); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Load Diagram</button>
+      </div>
+
+      <div id="diagramContainer" style="margin-bottom: 16px; text-align: center; background: var(--bg); padding: 16px; border-radius: 8px; min-height: 200px;">
+        <div style="color: var(--text-light); font-size: 12px;">Diagram will appear here</div>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 8px;">Add Labels (X,Y coordinates & name)</div>
+        <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+          <input type="number" id="labelX" placeholder="X %" style="padding: 6px; border: 1px solid var(--border); border-radius: 4px; width: 30%; font-size: 11px; background: var(--bg); color: var(--text); box-sizing: border-box;">
+          <input type="number" id="labelY" placeholder="Y %" style="padding: 6px; border: 1px solid var(--border); border-radius: 4px; width: 30%; font-size: 11px; background: var(--bg); color: var(--text); box-sizing: border-box;">
+          <input type="text" id="labelName" placeholder="Label name..." style="padding: 6px; border: 1px solid var(--border); border-radius: 4px; flex: 1; font-size: 11px; background: var(--bg); color: var(--text); box-sizing: border-box;">
+        </div>
+        <button onclick="addLabel()" style="width: 100%; padding: 8px; background: #51cf66; color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Add Label</button>
+      </div>
+
+      <div id="labelsList" style="background: var(--bg-secondary); padding: 10px; border-radius: 6px; font-size: 11px; max-height: 150px; overflow-y: auto;">
+        <div style="color: var(--text-light); text-align: center;">No labels yet</div>
+      </div>
+
+      <div style="background: var(--bg-secondary); padding: 10px; border-radius: 6px; font-size: 10px; color: var(--text-light); margin-top: 12px; text-align: center;">
+        💡 Save diagram labels in your notes for study
+      </div>
+    </div>
+  </div>
+
+  <!-- VOCAB DRILLS MODAL -->
+  <div class="modal" id="vocabModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('vocabModal')">✕</button>
+      <div class="modal-title">📚 Vocab Drills</div>
+
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 8px;">Add Biology Terms</div>
+        <input type="text" id="vocabTerm" placeholder="Term (e.g., Mitochondria)" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; box-sizing: border-box;">
+        <textarea id="vocabDef" placeholder="Definition..." style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; width: 100%; font-size: 12px; background: var(--bg); color: var(--text); margin-bottom: 8px; min-height: 60px; box-sizing: border-box;"></textarea>
+        <button onclick="addVocabTerm()" style="width: 100%; padding: 8px; background: var(--accent); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Add Term</button>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 11px; font-weight: 600; margin-bottom: 8px;">Study Mode</div>
+        <button onclick="startVocabQuiz()" style="width: 100%; padding: 10px; background: #667eea; color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 8px;">🧠 Start Quiz</button>
+        <button onclick="vocabFlashcards()" style="width: 100%; padding: 10px; background: #ffa94d; color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">🔄 Flashcards</button>
+      </div>
+
+      <div id="vocabList" style="background: var(--bg-secondary); padding: 10px; border-radius: 6px; font-size: 11px; max-height: 150px; overflow-y: auto;">
+        <div style="color: var(--text-light); text-align: center;">No terms added yet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRATCH PAD MODAL -->
+  <div class="modal" id="scratchModal" style="align-items: stretch;">
+    <div class="modal-content" style="max-width: 100vw; max-height: 100vh; width: 100%; height: 100%; display: flex; flex-direction: column; padding: 0; overflow: hidden; border-radius: 0;">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-bottom: 1px solid var(--border);">
+        <div class="modal-title" style="margin: 0;">✏️ Scratch Pad</div>
+        <button class="modal-close" onclick="closeModal('scratchModal')" style="position: static;">✕</button>
+      </div>
+
+      <div style="padding: 12px 20px; background: var(--bg-secondary); display: flex; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid var(--border);">
+        <button onclick="clearScratchPad()" style="padding: 8px 12px; background: #ff6b6b; color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">🗑️ Clear</button>
+        <button onclick="saveScratchPad()" style="padding: 8px 12px; background: #51cf66; color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">💾 Save Note</button>
+        <button onclick="downloadScratchPad()" style="padding: 8px 12px; background: #667eea; color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">📥 Download</button>
+      </div>
+
+      <textarea id="scratchPadText" placeholder="Write math steps, equations, brainstorm ideas, solve problems... Type here!" style="flex: 1; padding: 16px; border: none; border-radius: 0; background: var(--bg); color: var(--text); font-family: 'Courier New', monospace; font-size: 13px; resize: none; outline: none; box-sizing: border-box;"></textarea>
+    </div>
+  </div>
+
+  <!-- DESMOS CALCULATOR MODAL -->
+  <div class="modal" id="desmosModal" style="align-items: center;">
+    <div class="modal-content" style="max-width: 500px; text-align: center;">
+      <button class="modal-close" onclick="closeModal('desmosModal')">✕</button>
+      <div class="modal-title">📊 Desmos Calculator</div>
+      
+      <div style="margin: 20px 0;">
+        <div style="font-size: 14px; color: var(--text); margin-bottom: 16px;">
+          🔗 Opens Desmos in a new tab so you can use all features without limitations
+        </div>
+        <button onclick="window.open('https://www.desmos.com/calculator', '_blank')" style="width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 8px;">
+          🚀 Open Desmos Calculator
+        </button>
+        <button onclick="closeModal('desmosModal')" style="width: 100%; padding: 10px; background: var(--bg-secondary); color: var(--text); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; cursor: pointer;">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
 
   <script>
     let cards = [
@@ -1525,113 +1592,92 @@
       }
     }
 
-    function checkGrammar() {
-      const sentence = document.getElementById('grammarInput').value.trim();
-      if (!sentence) {
-        alert('Enter a sentence to check');
+    function saveApiKey() {
+      const key = document.getElementById('apiKeyInput').value.trim();
+      if (!key) {
+        alert('Paste your API key first');
+        return;
+      }
+      localStorage.setItem('anthropicApiKey', key);
+      document.getElementById('apiKeyInput').value = '';
+      alert('✅ API Key saved locally!');
+    }
+
+    async function checkGrammar() {
+      const text = document.getElementById('grammarInput').value.trim();
+      if (!text) {
+        alert('Paste text to check');
         return;
       }
 
-      let corrected = sentence;
-      let issues = [];
-
-      // 1. Capitalize first word
-      if (corrected.charAt(0) === corrected.charAt(0).toLowerCase()) {
-        corrected = corrected.charAt(0).toUpperCase() + corrected.slice(1);
-        issues.push('Capitalized first word');
+      const apiKey = localStorage.getItem('anthropicApiKey');
+      if (!apiKey) {
+        alert('⚠️ Save your API key first!');
+        return;
       }
 
-      // 2. Fix lowercase "i"
-      corrected = corrected.replace(/\bi\b/g, 'I');
-      if (sentence.match(/\bi\b/)) {
-        issues.push('Capitalized "I"');
-      }
+      const resultsDiv = document.getElementById('grammarResult');
+      resultsDiv.innerHTML = '<div style="color: var(--text-light); text-align: center;">🚀 Checking with AI...</div>';
 
-      // 3. Fix common contractions and typos
-      corrected = corrected.replace(/\bwerre\b/gi, 'were');
-      corrected = corrected.replace(/\bwanna\b/gi, 'want to');
-      corrected = corrected.replace(/\baint\b/gi, 'am not');
-      corrected = corrected.replace(/\bgonna\b/gi, 'going to');
-      corrected = corrected.replace(/\bim\b/gi, 'I\'m');
-      corrected = corrected.replace(/\byour\s+(going|coming|doing|being|making)/gi, 'you\'re $1');
-      
-      if (corrected !== sentence) {
-        if (corrected.match(/were|want to|am not|going to|I'm|you're/)) {
-          issues.push('Fixed typos/contractions');
-        }
-      }
+      try {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01'
+          },
+          body: JSON.stringify({
+            model: 'claude-opus-4-1',
+            max_tokens: 1500,
+            messages: [
+              {
+                role: 'user',
+                content: `Analyze this text for grammar and writing issues. Provide:
+1. A corrected version
+2. A list of specific issues found with explanations
+3. Writing improvements for clarity and style
 
-      // 4. Fix "me and" to "and me" (object) or " I" (subject)
-      if (corrected.match(/\bme\s+and\s+\w+\s+(went|go|did|do|am|are|is)/i)) {
-        corrected = corrected.replace(/\bme\s+and\s+(\w+)\s+(went|go|did|do|am|are|is)/gi, function(match, name, verb) {
-          return name + ' and I ' + verb;
+Text: "${text}"
+
+Format your response as:
+✓ CORRECTED:
+[corrected text]
+
+❌ ISSUES FOUND:
+[numbered list with explanation for each]
+
+💡 IMPROVEMENTS:
+[suggestions for better writing]`
+              }
+            ]
+          })
         });
-        issues.push('Fixed pronoun order (I before other people)');
-      }
 
-      // 5. Add period if missing
-      if (!corrected.match(/[.!?]$/)) {
-        corrected += '.';
-        issues.push('Added period');
-      }
-
-      // 6. Fix "its" vs "it's" (simple heuristic)
-      if (corrected.match(/\bits\s+(raining|going|been|not|a|the)/i)) {
-        corrected = corrected.replace(/\bits\s+(raining|going|been|not|a|the)/gi, 'it\'s $1');
-        issues.push('Fixed its/it\'s');
-      }
-
-      // 7. Check for comma splice and fix
-      if (corrected.match(/[a-z]\s*,\s*[a-z]+\s+[a-z]+\s+[a-z]+/) && !corrected.match(/,\s+(and|but|or|so)/)) {
-        const parts = corrected.split(',');
-        if (parts.length === 2) {
-          const firstPart = parts[0].trim();
-          const secondPart = parts[1].trim();
-          if (firstPart.match(/[a-z]$/) && secondPart.match(/^[a-z]/)) {
-            corrected = firstPart + '. ' + secondPart.charAt(0).toUpperCase() + secondPart.slice(1);
-            issues.push('Fixed comma splice (split into 2 sentences)');
-          }
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error?.message || 'API error');
         }
-      }
 
-      // 8. Try to shorten run-on sentences (multiple "and"s)
-      const andCount = (corrected.match(/\s+and\s+/g) || []).length;
-      if (andCount > 2) {
-        const sentences = corrected.split(/\s+and\s+/);
-        if (sentences.length > 3) {
-          corrected = sentences.slice(0, 2).join(' and ') + '. ' + sentences.slice(2).join(' and ');
-          issues.push('Shortened run-on (split long sentence)');
-        }
-      }
+        const data = await response.json();
+        const aiResponse = data.content[0].text;
 
-      let result = `
-        <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px; margin-bottom: 12px;">
-          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 6px;">✏️ Original:</div>
-          <div style="font-family: monospace; font-size: 12px; color: var(--text); margin-bottom: 12px; padding: 8px; background: var(--bg); border-radius: 4px;">${sentence}</div>
-          
-          <div style="font-size: 11px; color: var(--text-light); margin-bottom: 6px;">✓ Corrected:</div>
-          <div style="font-family: monospace; font-size: 12px; color: var(--success); padding: 8px; background: var(--bg); border-radius: 4px; font-weight: 500;">${corrected}</div>
-        </div>
-      `;
-
-      if (issues.length > 0) {
-        result += `
-          <div style="background: rgba(102,126,234,0.1); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
-            <div style="font-size: 11px; font-weight: 600; margin-bottom: 8px;">Changes Made:</div>
-            <div style="font-size: 11px; line-height: 1.6; color: var(--text-light);">
-              ${issues.map(issue => `✓ ${issue}`).join('<br>')}
-            </div>
+        resultsDiv.innerHTML = `
+          <div style="background: var(--bg-secondary); padding: 12px; border-radius: 6px; white-space: pre-wrap; word-wrap: break-word; font-size: 11px; line-height: 1.6; color: var(--text);">
+            ${aiResponse}
           </div>
         `;
-      } else {
-        result += `
-          <div style="background: rgba(40,167,69,0.1); padding: 12px; border-radius: 8px;">
-            <div style="font-size: 11px; font-weight: 600; color: var(--success);">✓ Already correct!</div>
+      } catch (error) {
+        resultsDiv.innerHTML = `
+          <div style="background: #ff6b6b; color: white; padding: 12px; border-radius: 6px; font-size: 11px;">
+            ❌ Error: ${error.message}<br><br>
+            <strong>Troubleshooting:</strong><br>
+            - Is your API key valid?<br>
+            - Visit console.anthropic.com to verify<br>
+            - Try saving the key again
           </div>
         `;
       }
-
-      document.getElementById('grammarResult').innerHTML = result;
     }
 
     function solveMath() {
@@ -2320,8 +2366,262 @@
     updateDueThisWeek();
     renderDailyTasks();
     renderClasses();
+    
+    // Auto-save scratch pad
+    setTimeout(() => {
+      const scratchPad = document.getElementById('scratchPadText');
+      if (scratchPad) {
+        scratchPad.addEventListener('input', () => {
+          localStorage.setItem('scratchPadContent', scratchPad.value);
+        });
+      }
+    }, 500);
 
     
+    // DIAGRAM LABELER
+    let currentDiagramLabels = [];
+    
+    function openDiagramLabeler() {
+      document.getElementById('diagramModal').classList.add('open');
+    }
+    
+    function loadDiagram() {
+      const url = document.getElementById('diagramUrl').value.trim();
+      if (!url) {
+        alert('Paste a diagram image URL');
+        return;
+      }
+      
+      const container = document.getElementById('diagramContainer');
+      container.innerHTML = `
+        <img src="${url}" style="max-width: 100%; max-height: 300px; border-radius: 6px; margin-bottom: 12px;" onerror="alert('Error loading image. Check the URL.')">
+        <div style="color: var(--text-light); font-size: 11px; margin-top: 8px;">Click "Add Label" to mark parts</div>
+      `;
+      
+      currentDiagramLabels = [];
+      renderDiagramLabels();
+    }
+    
+    function addLabel() {
+      const x = document.getElementById('labelX').value;
+      const y = document.getElementById('labelY').value;
+      const name = document.getElementById('labelName').value.trim();
+      
+      if (!x || !y || !name) {
+        alert('Fill in X%, Y%, and label name');
+        return;
+      }
+      
+      currentDiagramLabels.push({ x, y, name });
+      
+      document.getElementById('labelX').value = '';
+      document.getElementById('labelY').value = '';
+      document.getElementById('labelName').value = '';
+      
+      renderDiagramLabels();
+    }
+    
+    function renderDiagramLabels() {
+      const html = currentDiagramLabels.map((label, i) => `
+        <div style="background: var(--bg); padding: 8px; border-radius: 4px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 11px; color: var(--text);">
+            <strong>${label.name}</strong> @ (${label.x}%, ${label.y}%)
+          </div>
+          <button onclick="deleteDiagramLabel(${i})" style="padding: 2px 6px; font-size: 10px; background: #ff6b6b; color: white; border: none; border-radius: 3px; cursor: pointer;">✕</button>
+        </div>
+      `).join('');
+      
+      document.getElementById('labelsList').innerHTML = html || '<div style="color: var(--text-light); text-align: center;">No labels yet</div>';
+    }
+    
+    function deleteDiagramLabel(index) {
+      currentDiagramLabels.splice(index, 1);
+      renderDiagramLabels();
+    }
+
+    // VOCAB DRILLS
+    let vocabTerms = [];
+    let vocabQuizIndex = 0;
+    
+    function openVocabDrills() {
+      document.getElementById('vocabModal').classList.add('open');
+    }
+    
+    function addVocabTerm() {
+      const term = document.getElementById('vocabTerm').value.trim();
+      const def = document.getElementById('vocabDef').value.trim();
+      
+      if (!term || !def) {
+        alert('Fill in term and definition');
+        return;
+      }
+      
+      vocabTerms.push({ 
+        id: Date.now(), 
+        term, 
+        def,
+        correct: 0,
+        attempts: 0,
+        difficulty: 'medium'
+      });
+      
+      document.getElementById('vocabTerm').value = '';
+      document.getElementById('vocabDef').value = '';
+      
+      renderVocabList();
+    }
+    
+    function renderVocabList() {
+      const html = vocabTerms.map((v, i) => {
+        const accuracy = v.attempts > 0 ? Math.round((v.correct / v.attempts) * 100) : 0;
+        return `
+          <div style="background: var(--bg); padding: 8px; border-radius: 4px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 11px; color: var(--text); flex: 1;">
+              <strong>${v.term}</strong><br>
+              <span style="color: var(--text-light); font-size: 10px;">${v.def.substring(0, 40)}...</span>
+              <br><span style="font-size: 10px; color: var(--accent);">${accuracy}% accuracy</span>
+            </div>
+            <button onclick="deleteVocabTerm(${v.id})" style="padding: 2px 6px; font-size: 10px; background: #ff6b6b; color: white; border: none; border-radius: 3px; cursor: pointer;">✕</button>
+          </div>
+        `;
+      }).join('');
+      
+      document.getElementById('vocabList').innerHTML = html || '<div style="color: var(--text-light); text-align: center;">No terms added yet</div>';
+    }
+    
+    function deleteVocabTerm(id) {
+      vocabTerms = vocabTerms.filter(v => v.id !== id);
+      renderVocabList();
+    }
+    
+    function startVocabQuiz() {
+      if (vocabTerms.length === 0) {
+        alert('Add terms first!');
+        return;
+      }
+      
+      vocabQuizIndex = 0;
+      showVocabQuestion();
+    }
+    
+    function showVocabQuestion() {
+      if (vocabQuizIndex >= vocabTerms.length) {
+        alert('✅ Quiz complete! Review your weak areas.');
+        vocabQuizIndex = 0;
+        return;
+      }
+      
+      const term = vocabTerms[vocabQuizIndex];
+      const userAnswer = prompt(`Define: "${term.term}"\n\n(Your definition will be compared)`);
+      
+      if (userAnswer === null) return; // User cancelled
+      
+      term.attempts++;
+      
+      // Simple match check (user can verify themselves)
+      const similarity = userAnswer.toLowerCase().includes(term.term.toLowerCase().split(' ')[0]) ? 0.5 : 0;
+      alert(`Definition:\n${term.def}\n\nYou can adjust difficulty if needed.`);
+      
+      const correct = confirm('Did you get it right?');
+      if (correct) term.correct++;
+      
+      vocabQuizIndex++;
+      if (vocabQuizIndex < vocabTerms.length) {
+        showVocabQuestion();
+      } else {
+        alert('✅ Quiz complete!');
+        renderVocabList();
+      }
+    }
+    
+    function vocabFlashcards() {
+      if (vocabTerms.length === 0) {
+        alert('Add terms first!');
+        return;
+      }
+      
+      let currentCard = 0;
+      let isFlipped = false;
+      
+      const showCard = () => {
+        if (currentCard >= vocabTerms.length) {
+          alert('✅ Flashcard session complete!');
+          return;
+        }
+        
+        const card = vocabTerms[currentCard];
+        isFlipped = false;
+        
+        const response = prompt(
+          `[${currentCard + 1}/${vocabTerms.length}]\n\n${card.term}\n\nPress OK to flip...`,
+          ''
+        );
+        
+        if (response === null) return;
+        
+        isFlipped = true;
+        const nextResponse = prompt(
+          `[${currentCard + 1}/${vocabTerms.length}]\n\nDEFINITION:\n${card.def}\n\nPress OK for next card...`,
+          ''
+        );
+        
+        if (nextResponse !== null) {
+          currentCard++;
+          showCard();
+        }
+      };
+      
+      showCard();
+    }
+
+    // SCRATCH PAD
+    function openScratchPad() {
+      document.getElementById('scratchModal').classList.add('open');
+      // Load saved content if it exists
+      const saved = localStorage.getItem('scratchPadContent');
+      if (saved) {
+        document.getElementById('scratchPadText').value = saved;
+      }
+    }
+    
+    function clearScratchPad() {
+      const textArea = document.getElementById('scratchPadText');
+      if (confirm('Clear scratch pad?')) {
+        textArea.value = '';
+        localStorage.removeItem('scratchPadContent');
+      }
+    }
+    
+    function saveScratchPad() {
+      const content = document.getElementById('scratchPadText').value;
+      localStorage.setItem('scratchPadContent', content);
+      alert('✅ Scratch pad saved!');
+    }
+    
+    function downloadScratchPad() {
+      const content = document.getElementById('scratchPadText').value;
+      
+      if (!content.trim()) {
+        alert('Nothing to download!');
+        return;
+      }
+      
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `ScratchPad_${new Date().toISOString().split('T')[0]}.txt`;
+      link.click();
+      URL.revokeObjectURL(url);
+      
+      alert('✅ Scratch pad downloaded!');
+    }
+
+    // DESMOS CALCULATOR
+    function openDesmos() {
+      document.getElementById('desmosModal').classList.add('open');
+    }
+
     // CLASS TYPE (HS vs College)
     let currentClassType = 'hs';
     
